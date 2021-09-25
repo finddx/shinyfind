@@ -1,0 +1,242 @@
+
+/* customize fonts */
+body, label, input, button, select{
+  font-weight: 300 !important; !important;
+  font-family: Roboto, sans-serif; !important;
+  font-size: 15px;
+  color: black;
+}
+
+.small{
+  font-weight: 300 !important;
+  font-family: Roboto, sans-serif !important;
+  color: black !important;
+}
+h1, h2, h3, h4 {
+  font-weight: 400 !important;
+}
+p {
+  /*font-weight: 400;*/
+}
+h3 {
+  padding-top: 20px;
+}
+
+/*logo*/
+.logo {
+  width: 100px; float: right
+}
+
+/* adjustments to tablerDash, so everything is white*/
+.page-main {
+  background-color: white !important;
+}
+.card {
+  border: 0px !important;
+  box-shadow: none  !important;
+}
+.card-body {
+  padding: 1rem !important;
+}
+
+/* info question mark, shows text onhover */
+
+.info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.info-mark {
+  color: #aaa;
+  margin-left: 0.6em;
+  cursor: pointer;
+}
+
+.info-list {
+  word-break: normal;
+  white-space: normal;
+}
+
+.info-mark-text {
+  display: none;
+  color: white;
+  z-index: 100000000 !important;
+  position: absolute;
+
+  border-style: solid;
+  white-space: nowrap;
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  background-color: rgba(50, 50, 50, 0.7);
+  border-width: 0px;
+  border-color: rgb(51, 51, 51);
+  border-radius: 4px;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  /*font: 14px / 21px "Roboto";*/
+  text-transform: none;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 12px;
+
+  pointer-events: none;
+
+  word-break: normal;
+  white-space: normal;
+}
+
+.info-mark-text-right {
+  margin-left: 00px;
+  width: 240px;
+  margin-top: -260px;
+  font-weight: 300;
+}
+
+
+.info-mark:hover .info-mark-text {
+  display: block;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .info-mark-text {
+    max-width: 30%;
+  }
+}
+
+.info-mark-text-float {
+  max-width: 100%;
+}
+
+
+/*elements shown in reactable*/
+.flag {
+  margin-right: 8px;
+  height: 20px;
+  border: 1px solid #f0f0f0;
+}
+.country {
+  display: flex;
+  align-items: center;
+}
+.circle {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 50%;
+  color: #000;
+  font-size: 12px;
+  padding-top: 5px;
+  padding-bottom: 0px ;
+  align-items: center;
+  align-content: center;
+}
+
+.page-main {
+  /*background-color: blue !important;*/
+
+}
+
+@media (min-width: 768px) {
+  .outcome-choice {
+    position: fixed !important;
+    margin-top: -40px;
+  }
+}
+
+
+
+/*show different logo dep on screeen size*/
+.logo-lg {
+  display:none;
+}
+@media (min-width: 768px) {
+  .logo-lg {
+    display:block;
+    width: 100px;
+    padding-bottom: 25px;
+  }
+}
+
+.logo-sm {
+  display:none
+}
+@media (max-width: 768px) {
+  .logo-sm {
+    display:block;
+    width: 100px;
+    float: right;
+  }
+}
+
+
+
+/* FIND banner, mostly copied from https://www.finddx.org/covid-19/dx-imp-sim/ */
+
+.hero {
+  color: #fff;
+  background-image: url(https://www.finddx.org/wp-content/uploads/2020/04/Coronavirus_CaitlinMonney_FIND.jpg);
+  background-size: 100vw auto;
+  background-position: 50%;
+  background-size: cover;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 230px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+
+.hero .gradient {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: -webkit-linear-gradient(90deg,#cd4652,#d3553f);
+  opacity: .8;
+}
+
+.hero .content {
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  max-width: 1200px;
+}
+
+@media (max-width: 992px) {
+  .hero .content {
+  padding: 3rem  !important;
+  }
+}
+
+.underline {
+  line-height: 30px;
+}
+
+h1, h2, h3 {
+  font-family: imperial-urw,sans-serif  !important;
+  text-transform: uppercase  !important;
+}
+
+h2 {
+  display: block;
+  /*font-size: 1.5em;*/
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-size: 40px;
+  font-weight: 800;
+  padding-bottom: 10px;
+  position: relative;
+  line-height: 1.1px;
+
+
+}
