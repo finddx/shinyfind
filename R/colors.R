@@ -3,6 +3,8 @@
 # library(colorblindr)
 # gg_color_swatches(8) +
 #   scale_fill_manual(values = pal_find())
+
+#' @export
 pal_find <- function(n = 7) {
   stopifnot(n <= 7)
   find_colors <- c(
