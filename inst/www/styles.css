@@ -4,7 +4,7 @@ body, label, input, button, select{
   font-weight: 300 !important; !important;
   font-family: Roboto, sans-serif; !important;
   font-size: 15px;
-  color: black;
+  color: black !important;
 }
 
 .small{
