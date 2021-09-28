@@ -3,4 +3,5 @@
 export(find_banner)
 export(find_dashboard_page)
 export(find_head)
+export(get_data_all)
 export(pal_find)
