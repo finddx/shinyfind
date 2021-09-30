@@ -171,6 +171,22 @@ h3 {
 
 
 
+
+/* Changing some defaults of basic bootstrap */
+
+/* more side padding on larger screens */
+@media (min-width: 768px) {
+  .container-fluid {
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+}
+
+html{
+  -webkit-font-smoothing: antialiased;
+}
+
+
 /* FIND banner, mostly copied from https://www.finddx.org/covid-19/dx-imp-sim/ */
 
 .hero {
