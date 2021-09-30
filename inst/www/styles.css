@@ -256,3 +256,26 @@ h2 {
 
 
 }
+
+
+/* styles for reactable bar charts. See donor app*/
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  white-space: pre;
+}
+
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 6px;
+  height: 14px;
+}
+
+.bar {
+  height: 100%;
+}
+
+
