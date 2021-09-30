@@ -21,4 +21,5 @@ Imports:
     dplyr,
     tidyr,
     tibble,
-    readr
+    readr,
+    tablerDash

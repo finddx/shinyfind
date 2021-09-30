@@ -25,14 +25,14 @@ find_head <- function() {
 
 #' @export
 find_dashboard_page <- function(..., title = "") {
-  tablerDashPage(
+  tablerDash::tablerDashPage(
     navbar = tags$div(
       find_banner(title)
     ),
     loading_duration = 0,
-    footer = tablerDashFooter(tagList(title), copyrights = "Copyright FIND"),
+    footer = tablerDash::tablerDashFooter(tagList(title), copyrights = "Copyright FIND"),
     title = title,
-    body = addDeps(tablerDashBody(
+    body = addDeps(tablerDash::tablerDashBody(
       find_head(),
       ...
     ))
