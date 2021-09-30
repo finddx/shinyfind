@@ -19,10 +19,11 @@ find_head <- function() {
 #' @export
 find_dashboard_page <- function(..., title = NULL, banner = find_banner(title)) {
   addDeps(bootstrapPage(
-  find_head(),
-  banner,
-  fluidPage(
-    ...,
-    title = title
-  )
+    find_head(),
+    banner,
+    fluidPage(
+      ...,
+      title = title
+    )
+  ))
 }
