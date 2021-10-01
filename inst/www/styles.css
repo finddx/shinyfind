@@ -169,12 +169,6 @@ h3 {
     padding-right: 10%;
     padding-left: 10%;
   }
-
-  .hero .content {
-    padding-right: 10%;
-    padding-left: 10%;
-  }
-
 }
 
 html{
@@ -226,6 +220,13 @@ html{
   padding: 3rem  !important;
   }
 }
+@media (min-width: 768px) {
+  .hero .content {
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+}
+
 
 .underline {
   line-height: 30px;
