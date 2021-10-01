@@ -27,17 +27,6 @@ h3 {
   width: 100px; float: right
 }
 
-/* adjustments to tablerDash, so everything is white*/
-.page-main {
-  background-color: white !important;
-}
-.card {
-  border: 0px !important;
-  box-shadow: none  !important;
-}
-.card-body {
-  padding: 1rem !important;
-}
 
 /* info question mark, shows text onhover */
 
@@ -180,6 +169,12 @@ h3 {
     padding-right: 10%;
     padding-left: 10%;
   }
+
+  .hero .content {
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+
 }
 
 html{
@@ -218,10 +213,10 @@ html{
 .hero .content {
   box-sizing: border-box;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
+  /*margin-right: auto;*/
+  /*margin-left: auto;*/
   position: relative;
   max-width: 1200px;
 }
