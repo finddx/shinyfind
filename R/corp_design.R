@@ -23,6 +23,8 @@ find_dashboard_page <- function(..., title = NULL, banner = find_banner(title)) 
     banner,
     fluidPage(
       ...,
+      br(),
+      br(),
       title = title
     )
   ))
