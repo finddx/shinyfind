@@ -242,8 +242,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     map_names,
     slider_date,
     segregated_tests_clean,
-    last_data_update,
-    codebook
+    last_data_update
   )
 
 }
