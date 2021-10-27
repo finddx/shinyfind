@@ -26,28 +26,40 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     }
   }
 
-  # info on variable selection
-  outcome_info <- tibble::tribble(
-    ~diff,     ~var,  ~ref, ~split_list, ~descr,                          ~info,
-    "cum",  "cases", "all", "huge",      "Cumulative number of cases",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all cases"), "."),
-    "cum",  "cases", "cap", "large",    "Cumulative number of cases per capita",    p("This time series chart shows the", strong("cumulative number"), "of", strong("cases per 100k of population"), "."),
-    "cum", "deaths", "all", "large",    "Cumulative number of deaths",    p("This time series chart shows the", strong("cumulative number"), "of", strong("all deaths"), "in each country."),
-    "cum", "deaths", "cap", "medium",    "Cumulative number of deaths per capita",     p("This time series chart shows the", strong("cumulative number"), "of", strong("deaths per 100k of population"), "."),
-    "cum",  "tests", "all", "huge",     "Cumulative number of tests",     p("This time series chart shows the", strong("cumulative number"), "of", strong("all tests"), "in each country."),
-    "cum",  "tests", "cap", "large",    "Cumulative number of tests per capita",     p("This time series chart shows the", strong("cumulative number"), "of", strong("tests per 100k of population"), "."),
-    "new",  "cases", "all", "medium",    "Daily number of cases",     p("This time series chart shows the", strong("daily number"), "of", strong("cases"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "cases", "cap", "small",     "Daily number of cases per capita",     p("This time series chart shows the", strong("daily number"), "of", strong("cases per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new", "deaths", "all", "small",     "Daily number of deaths",    p("This time series chart shows the", strong("daily number"), "of", strong("deaths"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new", "deaths", "cap", "tiny",      "Daily number of deaths per capita",    p("This time series chart shows the", strong("daily number"), "of", strong("deaths per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "tests", "all", "large",    "Daily number of tests",     p("This time series chart shows the", strong("daily number"), "of", strong("tests"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "tests", "cap", "small",    "Daily number of tests per capita",     p("This time series chart shows the", strong("daily number"), "of", strong("tests per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    # positivity rate: repeat same descr, info for 'cap' and 'all', despite being the same.
-    "cum",  "pos",   "all", "tiny",      "Positivity rate",   p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "cum",  "pos",   "cap", "tiny",      "Positivity rate",                  p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "new",  "pos",   "all", "tiny",      "Positivity rate",               p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "new",  "pos",   "cap", "tiny",      "Positivity rate",                  p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests.")
 
-  )
+  codebook <- read_csv("https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/codebook.csv", col_types = cols())
+
+
+  # info on variable selection
+  # (this has some info needed by the map application perhaps we can put it there)
+  outcome_info <- tibble::tribble(
+    ~diff,     ~var,  ~ref, ~split_list,         ~info,
+    "cum",  "cases", "all", "huge",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all cases"), "."),
+    "cum",  "cases", "cap", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("cases per 100k of population"), "."),
+    "cum", "deaths", "all", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("all deaths"), "in each country."),
+    "cum", "deaths", "cap", "medium",            p("This time series chart shows the", strong("cumulative number"), "of", strong("deaths per 100k of population"), "."),
+    "cum",  "tests", "all", "huge",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all tests"), "in each country."),
+    "cum",  "tests", "cap", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("tests per 100k of population"), "."),
+    "new",  "cases", "all", "medium",            p("This time series chart shows the", strong("daily number"), "of", strong("cases"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    "new",  "cases", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("cases per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    "new", "deaths", "all", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("deaths"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    "new", "deaths", "cap", "tiny",              p("This time series chart shows the", strong("daily number"), "of", strong("deaths per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    "new",  "tests", "all", "large",             p("This time series chart shows the", strong("daily number"), "of", strong("tests"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    "new",  "tests", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("tests per 100k of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+    # positivity rate: repeat same descr, info for 'cap' and 'all', despite being the same.
+    "cum",  "pos",   "all", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+    "cum",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+    "new",  "pos",   "all", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+    "new",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests.")
+  ) |>
+    mutate(variable = paste(ref, diff, var, sep = "_")) |>
+    mutate(variable = if_else(grepl("_pos$", variable), "pos", variable)) |>
+    left_join(codebook, by = "variable") |>
+    rename(descr = description) |>
+    select(-variable)
+
+
+
 
   # check if newer data is available in FINDCov19TrackerData
   data_all <- check_for_update("data_all",
@@ -67,6 +79,9 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/unit_info.csv",
     heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Funit_info.csv&page=1&per_page=1"
   )
+
+
+
 
 
 
@@ -228,7 +243,8 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     map_names,
     slider_date,
     segregated_tests_clean,
-    last_data_update
+    last_data_update,
+    codebook
   )
 
 }
