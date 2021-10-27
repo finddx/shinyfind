@@ -27,8 +27,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   }
 
 
-  codebook <- read_csv("https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/codebook.csv", col_types = cols())
-
+  codebook <- get_codebook()
 
   # info on variable selection
   # (this has some info needed by the map application perhaps we can put it there)
