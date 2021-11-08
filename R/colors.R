@@ -5,15 +5,27 @@
 #   scale_fill_manual(values = pal_find())
 
 #' @export
-pal_find <- function(n = 7) {
-  stopifnot(n <= 7)
+pal_find <- function(n = 14) {
+  stopifnot(n <= 14)
   find_colors <- c(
-    "#D2EAED",
-    "#43abb6",
-    "#F3D1D4",
-    "#cd4652",
-    "#F3D1D4",
-    "#602B59"
+    # 100% shade of 3 primary and 1 secondary FIND color
+    "#5b254e",
+    "#00a2ab",
+    "#7b97a0",
+    "#e64148",
+    # randomly picked from FIND color strips
+    "#306e7c",
+    "#9b2c4c",
+    # 85% shade of 3 primary and 1 secondary FIND color
+    "#703d5f",
+    "#00b0b7",
+    "#91a5ad",
+    "#ea645d",
+    # 65% shade of 3 primary colors and 1 secondary FIND color
+    "#8f637b",
+    "#6dc3c8",
+    "#adbac0",
+    "#f08d80"
   )
   find_colors[1:n]
 }
