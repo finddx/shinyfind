@@ -13,9 +13,9 @@ download_data_server <- function(id, data, include_codebook = TRUE) {
         } else {
           if (isTRUE(include_codebook)) {
             codebook <-
-              tibble(variable = colnames(data)) |>
+              tibble::tibble(variable = colnames(data)) |>
               dplyr::left_join(get_codebook(), by = "variable")
-            writexl::write_xlsx(lst(data, codebook), con)
+            writexl::write_xlsx(tibble::lst(data, codebook), con)
           } else {
             writexl::write_xlsx(data, con)
           }
