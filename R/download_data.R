@@ -1,10 +1,9 @@
 #' Shiny module server for downloading data
 #' @export
-download_data_server <- function(id, data) {
+download_data_server <- function(id, data, include_codebook = TRUE) {
   
   moduleServer(id, function(input, output, session) {
-    
-    output$o_download_all <- downloadHandler(
+    output$o_download <- downloadHandler(
       filename = function() {
         paste("data-", Sys.Date(), if (input$i_download_type == "csv") ".csv" else ".xlsx", sep = "")
       },
@@ -12,7 +11,14 @@ download_data_server <- function(id, data) {
         if (input$i_download_type == "csv") {
           readr::write_csv(data, con)
         } else {
-          writexl::write_xlsx(data, con)
+          if (isTRUE(include_codebook)) {
+            codebook <-
+              tibble(variable = colnames(data)) |>
+              left_join(get_codebook(), by = "variable")
+            writexl::write_xlsx(lst(data, codebook), con)
+          } else {
+            writexl::write_xlsx(data, con)
+          }
         }
       }
     )
@@ -27,7 +33,7 @@ download_data_ui <- function(id = NULL) {
   ns <- NS(id)
   
   tags$span(style = "display:flex;", p(
-    "All the data can be downloaded ", downloadLink(ns("o_download_all"), label = "here."), tags$span(style = "margin-left: 15px"),
+    downloadLink(ns("o_download"), label = "Download Data"), tags$span(style = "margin-left: 15px"),
     prettyRadioButtons(
       inputId = ns("i_download_type"),
       label = NULL,
@@ -51,7 +57,8 @@ example_download_data <- function() {
      download_data_ui("test")
     ),
     server = function(input, output, session) {
-      download_data_server("test", data = cars)
+      # test w a dataset that has a column from codebook
+      download_data_server("test", data = dplyr::mutate(cars, cap_cum_cases = 1))
     }
   )
 }
