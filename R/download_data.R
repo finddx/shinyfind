@@ -10,7 +10,7 @@ download_data_server <- function(id, data) {
       },
       content = function(con) {
         if (input$i_download_type == "csv") {
-          write_csv(data, con)
+          readr::write_csv(data, con)
         } else {
           writexl::write_xlsx(data, con)
         }
@@ -43,15 +43,24 @@ download_data_ui <- function(id = NULL) {
 
 
 # run as a module within minimal app
-#ui <- find_dashboard_page(
-#  download_data_ui("test")
-#)
+example_download_data <- function() {
+  library(shiny)
+  library(shinyWidgets)
+  shiny::shinyApp(
+    ui = find_dashboard_page(
+     download_data_ui("test")
+    ),
+    server = function(input, output, session) {
+      download_data_server("test", data = cars)
+    }
+  )
+}
 
-#server <- function(input, output, session) {
-#  download_data_server("test")
-#}
+# example_download_data()
 
-# shinyApp(ui = ui, server = server)
+
+
+
 
 
 
