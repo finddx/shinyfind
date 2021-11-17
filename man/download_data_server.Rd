@@ -4,7 +4,7 @@
 \alias{download_data_server}
 \title{Shiny module server for downloading data}
 \usage{
-download_data_server(id, data)
+download_data_server(id, data, include_codebook = TRUE)
 }
 \description{
 Shiny module server for downloading data
