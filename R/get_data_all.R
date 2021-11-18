@@ -96,7 +96,12 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
   shiny_data_wide <-
    data_all %>%
-    select(-c(name, pop_100k, new_cases_orig, new_deaths_orig, new_tests_orig, cum_tests_orig)) %>%
+    select(
+      set, unit, time, cap_cum_cases, cap_new_cases, cap_cum_deaths,
+      cap_new_deaths, cap_cum_tests, cap_new_tests, all_cum_cases,
+      all_new_cases, all_cum_deaths, all_new_deaths, all_cum_tests,
+      all_new_tests, pos
+    ) %>%
     # https://github.com/dsbbfinddx/FINDCov19TrackerShiny/issues/36
     mutate(pos = if_else(pos > 1, NA_real_, pos)) %>%
     # quadrupple pos series, to have all combinations
