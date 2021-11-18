@@ -5,7 +5,7 @@
 #' @name get_data_all
 get_data_all_ <- function(time = today_at_sunrise()) {
 
-  check_for_update <- function(object, download_url, heartbeat_url, col_spec = NULL) {
+  check_for_update <- function(object, download_url, heartbeat_url, col_spec = readr::cols()) {
 
     if (exists(object)) {
 
@@ -15,12 +15,12 @@ get_data_all_ <- function(time = today_at_sunrise()) {
         message(sprintf("'%s.csv': data already up-to-date, skipping download.", object))
         return(get(object, envir = globalenv()))
       } else {
-        object <- suppressMessages(readr::read_csv(download_url, quoted_na = FALSE, col_types = col_spec))
+        object <- readr::read_csv(download_url, col_types = col_spec)
         heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
         return(object)
       }
     } else {
-      object <- suppressMessages(readr::read_csv(download_url, quoted_na = FALSE, col_types = col_spec))
+      object <- readr::read_csv(download_url, col_types = col_spec)
       heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
       return(object)
     }
