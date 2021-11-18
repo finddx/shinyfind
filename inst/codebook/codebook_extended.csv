@@ -23,7 +23,7 @@ other,all_cum_deaths,Cumulative number of deaths,Cumulative Deaths,
 other,all_new_deaths,Daily number of cases (7 day rolling average),Daily Deaths,
 other,all_cum_tests,Cumulative number of tests (smoothed),Cumulative Tests,
 other,all_new_tests,Daily number of tests (7 day rolling average smoothed),Daily Tests,
-default,pos,Positivity rate (7 day rolling average),Positivity rate (%),all_new_cases/all_new_tests
+default,pos,Positivity rate,Positivity rate (%),all_new_cases/all_new_tests
 other,cap100K_cum_cases,Cumulative number of cases per 100K people,Cumulative Cases/100k,all_cum_cases/pop_100k
 other,cap100K_new_cases,Daily number of cases per 100K people (7 day rolling average),Cases/100k,all_new_cases/pop_100k
 other,cap100K_cum_deaths,Cumulative number of deaths per 100K people,Cumulative Deaths/100k,all_cum_deaths/pop_100k
@@ -42,7 +42,7 @@ other,avg_all_new_deaths,Average daily number of cases (7 day rolling average),A
 other,sum_all_new_deaths,Sum of daily number of cases (7 day rolling average),Sum Daily Deaths,sum(all_new_deaths)
 other,avg_all_new_tests,Average daily number of tests (7 day rolling average smoothed),Average daily Tests,mean(all_new_tests)
 other,sum_all_new_tests,Sum of daily number of tests (7 day rolling average smoothed),Sum daily Tests,sum(all_new_tests)
-default,avg_pos,Average Positivity rate (7 day rolling average),Average positivity rate (%),avg_all_new_cases/avg_all_new_tests
+default,avg_pos,Average Positivity rate,Average positivity rate (%),avg_all_new_cases/avg_all_new_tests
 other,avg_cap100K_new_cases,Average daily number of cases per 100K people,Average Cases/100k,mean(all_new_cases/pop_100k)
 other,sum_cap100K_new_cases,Sum of daily number of cases per 100K people,Sum Cases/100k,sum(all_new_cases/pop_100k
 other,avg_cap100K_new_deaths,Average daily number of deaths per 100K people,Average Deaths/100k,mean(all_new_deaths/pop_100k)
