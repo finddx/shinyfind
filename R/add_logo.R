@@ -10,7 +10,7 @@
 
 
 #' @export
-add_logo <- function(e, image = "logo_header.svg", height = 25, top = "auto", bottom = 20, left = "right") {
+add_logo <- function(e, image = "img/logo_header.svg", height = 25, top = "auto", bottom = 20, left = "right") {
   logo = list( 
     logo = list(height=height, backgroundColor=list(
       image = image))
