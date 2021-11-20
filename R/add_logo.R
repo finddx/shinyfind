@@ -10,7 +10,7 @@
 
 
 #' @export
-add_logo <- function(e, image = "img/logo_header.svg", height = 25, top = "auto", bottom = 20, left = "right") {
+add_logo <- function(e, image = "img/logo_header.svg", height = 35, top = "auto", bottom = 20, left = "right") {
   logo = list( 
     logo = list(height=height, backgroundColor=list(
       image = image))
@@ -23,6 +23,6 @@ add_logo <- function(e, image = "img/logo_header.svg", height = 25, top = "auto"
             top = top,
             textStyle = list(fontStyle = "normal", rich = logo),
             subtext = "Source: finddx.org/covid-19/test-tracker",
-            itemGap = 1) 
+            itemGap = 4) 
   e
 }
