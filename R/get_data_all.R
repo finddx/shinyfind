@@ -27,7 +27,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   }
 
 
-  codebook <- get_codebook()
+  codebook <- get_codebook_extended()
 
   # info on variable selection
   # (this has some info needed by the map application perhaps we can put it there)
