@@ -32,26 +32,38 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   # info on variable selection
   # (this has some info needed by the map application perhaps we can put it there)
   outcome_info <- tibble::tribble(
-    ~diff,     ~var,  ~ref, ~split_list,         ~info,
-    "cum",  "cases", "all", "huge",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all cases"), "."),
-    "cum",  "cases", "cap", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("cases per 1000 of population"), "."),
-    "cum", "deaths", "all", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("all deaths"), "in each country."),
-    "cum", "deaths", "cap", "medium",            p("This time series chart shows the", strong("cumulative number"), "of", strong("deaths per 1000 of population"), "."),
-    "cum",  "tests", "all", "huge",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all tests"), "in each country."),
-    "cum",  "tests", "cap", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("tests per 1000 of population"), "."),
-    "new",  "cases", "all", "medium",            p("This time series chart shows the", strong("daily number"), "of", strong("cases"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "cases", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("cases per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new", "deaths", "all", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("deaths"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new", "deaths", "cap", "tiny",              p("This time series chart shows the", strong("daily number"), "of", strong("deaths per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "tests", "all", "large",             p("This time series chart shows the", strong("daily number"), "of", strong("tests"), ". Due to data inconsistencies, we show a moving 7-day average."),
-    "new",  "tests", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("tests per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   ~calc, ~diff,     ~var,  ~ref, ~split_list,         ~info,
+   NA, "cum",  "cases", "all", "huge",               p("This time series chart shows the", strong("cumulative number"), "of", strong("all cases"), "."),
+   NA, "cum",  "cases", "cap", "large",              p("This time series chart shows the", strong("cumulative number"), "of", strong("cases per 1000 of population"), "."),
+   NA, "cum", "deaths", "all", "large",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all deaths"), "in each country."),
+   NA,  "cum", "deaths", "cap", "medium",            p("This time series chart shows the", strong("cumulative number"), "of", strong("deaths per 1000 of population"), "."),
+   NA,  "cum",  "tests", "all", "huge",              p("This time series chart shows the", strong("cumulative number"), "of", strong("all tests"), "in each country."),
+   NA,  "cum",  "tests", "cap", "large",             p("This time series chart shows the", strong("cumulative number"), "of", strong("tests per 1000 of population"), "."),
+   NA,  "new",  "cases", "all", "medium",            p("This time series chart shows the", strong("daily number"), "of", strong("cases"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new",  "cases", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("cases per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new", "deaths", "all", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("deaths"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new", "deaths", "cap", "tiny",              p("This time series chart shows the", strong("daily number"), "of", strong("deaths per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new",  "tests", "all", "large",             p("This time series chart shows the", strong("daily number"), "of", strong("tests"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new",  "tests", "cap", "small",             p("This time series chart shows the", strong("daily number"), "of", strong("tests per 1000 of population"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "avg",  "new",  "tests", "all", "large",          p("This time series chart shows the", strong("average number"), "of", strong("tests for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "avg",  "new",  "tests", "cap", "small",          p("This time series chart shows the", strong("average number"), "of", strong("tests per 1000 of population for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "sum",  "new",  "tests", "all", "huge",           p("This time series chart shows the", strong("cumulative number"), "of", strong("all tests for the selected time range"), "in each country."),
+   "sum",  "new",  "tests", "cap", "large",          p("This time series chart shows the", strong("cumulative number"), "of", strong("tests per 1000 of population for the selected time range"), "."),
+   "avg",  "new",  "cases", "all", "large",          p("This time series chart shows the", strong("average number"), "of", strong("cases for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "avg",  "new",  "cases", "cap", "small",          p("This time series chart shows the", strong("average number"), "of", strong("cases per 1000 of population for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "sum",  "new",  "cases", "all", "huge",           p("This time series chart shows the", strong("cumulative number"), "of", strong("all cases for the selected time range"), "in each country."),
+   "sum",  "new",  "cases", "cap", "large",          p("This time series chart shows the", strong("cumulative number"), "of", strong("cases per 1000 of population for the selected time range"), "."),
+   "avg",  "new",  "deaths", "all", "large",         p("This time series chart shows the", strong("average number"), "of", strong("deaths for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "avg",  "new",  "deaths", "cap", "small",         p("This time series chart shows the", strong("average number"), "of", strong("deaths per 1000 of population for the selected time range"), ". Due to data inconsistencies, we show a moving 7-day average."),
+   "sum",  "new",  "deaths", "all", "huge",          p("This time series chart shows the", strong("cumulative number"), "of", strong("all deaths for the selected time range"), "in each country."),
+   "sum",  "new",  "deaths", "cap", "large",         p("This time series chart shows the", strong("cumulative number"), "of", strong("deaths per 1000 of population for the selected time range"), "."),
     # positivity rate: repeat same descr, info for 'cap' and 'all', despite being the same.
-    "cum",  "pos",   "all", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "cum",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "new",  "pos",   "all", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
-    "new",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests.")
+   NA, "cum",  "pos",   "all", "tiny",               p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+   NA,  "cum",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+   NA,  "new",  "pos",   "all", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests."),
+   NA,  "new",  "pos",   "cap", "tiny",              p("This time series chart shows the", strong("positivity rate."), "This is calculated as the ratio of 7 day average of daily number of cases to daily number of tests.")
   ) |>
-    mutate(variable = paste(ref, diff, var, sep = "_")) |>
+    mutate(variable = if_else(is.na(calc), paste(ref, diff, var, sep = "_"), paste(calc, ref, diff, var, sep = "_"))) |>
     mutate(variable = if_else(grepl("_pos$", variable), "pos", variable)) |>
     left_join(codebook, by = "variable") |>
     rename(descr = description) |>
