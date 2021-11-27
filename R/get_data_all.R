@@ -33,8 +33,8 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   # (this has some info needed by the map application perhaps we can put it there)
   outcome_info <- tibble::tribble(
    ~calc, ~diff,     ~var,  ~ref, ~split_list,         ~info,
-   NA, "cum",  "cases", "all", "huge",               p("The time series chart below shows the", strong("cumulative number"), "of", strong("all cases")"."),
-   NA, "cum",  "cases", "cap", "large",              p("The time series chart below shows the", strong("cumulative number"), "of", strong("cases per 1000 people")"."),
+   NA, "cum",  "cases", "all", "huge",               p("The time series chart below shows the", strong("cumulative number"), "of", strong("all cases"),"."),
+   NA, "cum",  "cases", "cap", "large",              p("The time series chart below shows the", strong("cumulative number"), "of", strong("cases per 1000 people"),"."),
    NA, "cum", "deaths", "all", "large",              p("The time series chart below shows the", strong("cumulative number"), "of", strong("all deaths"), " in each country."),
    NA,  "cum", "deaths", "cap", "medium",            p("The time series chart below shows the", strong("cumulative number"), "of", strong("deaths per 1000 people"),"."),
    NA,  "cum",  "tests", "all", "huge",              p("The time series chart below shows the", strong("cumulative number"), "of", strong("all tests"), " in each country."),
