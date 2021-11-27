@@ -33,7 +33,7 @@ download_data_ui <- function(id = NULL) {
   ns <- NS(id)
   
   tags$span(style = "display:flex;", p(
-    downloadLink(ns("o_download"), label = "Download Data"), tags$span(style = "margin-left: 15px"),
+    downloadLink(ns("o_download"), label = "Download data"), tags$span(style = "margin-left: 15px"),
     prettyRadioButtons(
       inputId = ns("i_download_type"),
       label = NULL,
