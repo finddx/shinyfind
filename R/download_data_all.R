@@ -27,7 +27,7 @@ example_download_data <- function() {
   library(shinyWidgets)
   shiny::shinyApp(
     ui = find_dashboard_page(
-      download_data_ui("test")
+      download_data_ui()
     ),
     server = function(input, output, session) {
       # no need for a content here
