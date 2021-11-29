@@ -164,7 +164,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   country_name <- country_info  %>%
     left_join(select(country_name, country), by = c("alpha3" = "country")) %>%
     rename(country = alpha3)
-
+  
   # segregated_tests = check_for_update("unit_info",
   #   download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/automated/segregated_tests.csv",
   #   heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_tests.csv&page=1&per_page=1"
@@ -232,6 +232,16 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     mutate(latest_test_date = as.character(latest_test_date)) %>%
     left_join(select(pcr_rapid, unit, pcr_share), by = "unit")
 
+  data_last_update <- readr::read_csv("https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/issues/countries-last-update.csv",
+                                      col_types = readr::cols())
+  
+  country_last_update_info <-
+    country_info_raw |>
+    select(unit = alpha3, name, continent, continent, income, who_region) |>
+    left_join(select(unit_info_exp, unit, jhu_ID, tests_description, tests_type), by = "unit") |>
+    left_join(select(data_last_update, country, last_update),
+              by = c("jhu_ID" = "country")) |>
+    select(-jhu_ID)
 
   map_names <-
     select(data_all, name, unit) %>%
@@ -253,6 +263,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     data_all,
     country_info,
     country_info_matrix,
+    country_last_update_info,
     outcome_info,
     pcr_rapid,
     unit_info_exp,
