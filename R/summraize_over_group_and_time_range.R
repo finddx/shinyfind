@@ -42,8 +42,8 @@ summarize_over_group_and_time_range <- function (data_all, country_last_update_i
     summarize(
       name = name[1],
       group = group[1],
-      pop_100k               = mean(pop_100k                  , na.rm = TRUE),
-      pop                    = mean(pop                       , na.rm = TRUE),
+      pop_100k               = if(grouped) sum(pop_100k[time == end_date], na.rm = TRUE) else mean(pop_100k, na.rm = TRUE),
+      pop                    = if(grouped) sum(pop[time == end_date], na.rm = TRUE) else mean(pop, na.rm = TRUE),
       avg_cap_new_cases      = mean(all_new_cases / pop       , na.rm = TRUE),
       sum_cap_new_cases      = sum(all_new_cases / pop        , na.rm = TRUE),
       avg_cap_new_deaths     = mean(all_new_deaths / pop      , na.rm = TRUE),
