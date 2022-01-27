@@ -44,11 +44,11 @@ summarize_over_group_and_time_range <- function (data_all, country_last_update_i
       group = group[1],
       pop_100k               = if(grouped) sum(pop_100k[time == end_date], na.rm = TRUE) else mean(pop_100k, na.rm = TRUE),
       pop                    = if(grouped) sum(pop[time == end_date], na.rm = TRUE) else mean(pop, na.rm = TRUE),
-      avg_cap_new_cases      = median(all_new_cases / pop       , na.rm = TRUE),
+      avg_cap_new_cases      = if(grouped) median(all_new_cases / pop, na.rm = TRUE) else mean(all_new_cases / pop, na.rm = TRUE),
       sum_cap_new_cases      = sum(all_new_cases / pop        , na.rm = TRUE),
-      avg_cap_new_deaths     = median(all_new_deaths / pop      , na.rm = TRUE),
+      avg_cap_new_deaths     = if(grouped) median(all_new_deaths / pop, na.rm = TRUE) else mean(all_new_deaths / pop, na.rm = TRUE),
       sum_cap_new_deaths     = sum(all_new_deaths / pop       , na.rm = TRUE),
-      avg_cap_new_tests      = median(all_new_tests / pop       , na.rm = TRUE),
+      avg_cap_new_tests      = if(grouped) median(all_new_tests / pop, na.rm = TRUE) else mean(all_new_tests / pop, na.rm = TRUE),
       sum_cap_new_tests      = sum(all_new_tests / pop        , na.rm = TRUE),
       avg_all_new_cases      = mean(all_new_cases             , na.rm = TRUE),
       sum_all_new_cases      = sum(all_new_cases              , na.rm = TRUE),
@@ -57,14 +57,13 @@ summarize_over_group_and_time_range <- function (data_all, country_last_update_i
       avg_all_new_tests      = mean(all_new_tests             , na.rm = TRUE),
       sum_all_new_tests      = sum(all_new_tests              , na.rm = TRUE),
       avg_pos                = avg_all_new_cases / avg_all_new_tests,
-      avg_cap100k_new_cases  = median(all_new_cases / pop_100k  , na.rm = TRUE),
+      avg_cap100k_new_cases  = if(grouped) median(all_new_cases / pop_100k, na.rm = TRUE) else mean(all_new_cases / pop_100k, na.rm = TRUE),
       sum_cap100k_new_cases  = sum(all_new_cases / pop_100k   , na.rm = TRUE),
-      avg_cap100k_new_deaths = median(all_new_deaths / pop_100k , na.rm = TRUE),
+      avg_cap100k_new_deaths = if(grouped) median(all_new_deaths / pop_100k, na.rm = TRUE) else mean(all_new_deaths / pop_100k, na.rm = TRUE),
       sum_cap100k_new_deaths = sum(all_new_deaths / pop_100k  , na.rm = TRUE),
-      avg_cap100k_new_tests  = median(all_new_tests / pop_100k  , na.rm = TRUE),
+      avg_cap100k_new_tests  = if(grouped) median(all_new_tests / pop_100k, na.rm = TRUE) else mean(all_new_tests / pop_100k, na.rm = TRUE),
       sum_cap100k_new_tests  = sum(all_new_tests / pop_100k   , na.rm = TRUE),
       .groups = "drop"
     )
   data_table
 }
-
