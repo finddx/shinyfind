@@ -2,8 +2,8 @@
 #'
 #' All apps should use this functions to do aggregations!
 #'
-#' In principle first it should be: summarise by time (examples time range given
-#' below for reference) and then summarise by group.
+#' In principle first it should be: (1) summarise by time (examples time range given
+#' below for reference) and then (2) summarise by group.
 #'
 #' The avg_cap_new_tests of the groups should be calculated using median and not
 #' mean.
@@ -14,11 +14,31 @@
 #' vice versa.
 #'
 #' See discussiofn in: https://github.com/dsbbfinddx/shinyfindapps/issues/142#issuecomment-1023435405
-
-
-#' Step 1: Summarize Data Over Time
-#'
 #' @export
+#' @examples
+#'
+#' library(shinyfind)
+#' library(dplyr)
+#' . <- get_data_all()
+#' data_all <- .$data_all
+#' country_last_update_info <- .$country_last_update_info
+#'
+#' time_start <- as.Date(max(data_all$time) - 367)
+#' time_end <- as.Date(max(data_all$time) - 2)
+#' data_filtered <-
+#'   data_all |>
+#'   filter(set == "country") |>
+#'   select(-name, -set) |>
+#'   left_join(country_last_update_info, by = "unit") |>
+#'   filter(!is.na(last_update))|>
+#'   filter(dplyr::between(
+#'     time,
+#'     as.Date(time_start),
+#'     as.Date(time_end)
+#'   ))
+#' data_summarized_over_time <- shinyfind::summarize_over_time(data_filtered)
+#' shinyfind::summarize_over_group(data_summarized_over_time, "income")
+#' shinyfind::summarize_over_group(data_summarized_over_time, "who_region")
 summarize_over_time <- function (data_filtered) {
 
   data_summarized_over_time <-
@@ -57,7 +77,7 @@ summarize_over_time <- function (data_filtered) {
 
 
 #' Step 2: Summarize Data Over Groups (using Median)
-#'
+#' @name summarize_over_time
 #' @export
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
 
