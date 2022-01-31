@@ -40,38 +40,75 @@
 #' shinyfind::summarize_over_group(data_summarized_over_time, "income")
 #' shinyfind::summarize_over_group(data_summarized_over_time, "who_region")
 summarize_over_time <- function (data_filtered) {
-
-  data_summarized_over_time <-
-    data_filtered |>
-    group_by(unit) |>
-    summarize(
-      name = name[1],
-      pop_100k                 = mean(pop_100k, na.rm = TRUE),
-      pop                      = mean(pop, na.rm = TRUE),
-      avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
-      sum_cap_new_cases        = sum(all_new_cases / pop        , na.rm = TRUE),
-      avg_cap_new_deaths       = mean(all_new_deaths / pop      , na.rm = TRUE),
-      sum_cap_new_deaths       = sum(all_new_deaths / pop       , na.rm = TRUE),
-      avg_cap_new_tests        = mean(all_new_tests / pop       , na.rm = TRUE),
-      sum_cap_new_tests        = sum(all_new_tests / pop        , na.rm = TRUE),
-      avg_all_new_cases        = mean(all_new_cases             , na.rm = TRUE),
-      sum_all_new_cases        = sum(all_new_cases              , na.rm = TRUE),
-      avg_all_new_deaths       = mean(all_new_deaths            , na.rm = TRUE),
-      sum_all_new_deaths       = sum(all_new_deaths             , na.rm = TRUE),
-      avg_all_new_tests        = mean(all_new_tests             , na.rm = TRUE),
-      sum_all_new_tests        = sum(all_new_tests              , na.rm = TRUE),
-      avg_pos                  = avg_all_new_cases / avg_all_new_tests,
-      avg_cap100k_new_cases    = mean(all_new_cases / pop_100k  , na.rm = TRUE),
-      sum_cap100k_new_cases    = sum(all_new_cases / pop_100k   , na.rm = TRUE),
-      avg_cap100k_new_deaths   = mean(all_new_deaths / pop_100k , na.rm = TRUE),
-      sum_cap100k_new_deaths   = sum(all_new_deaths / pop_100k  , na.rm = TRUE),
-      avg_cap100k_new_tests    = mean(all_new_tests / pop_100k  , na.rm = TRUE),
-      sum_cap100k_new_tests    = sum(all_new_tests / pop_100k   , na.rm = TRUE),
-      continent = continent[1],
-      income = income[1],
-      who_region = who_region[1],
-      .groups = "drop"
-    )
+  
+  # if the data is for a time range
+  if(n_distinct(data_filtered$time) > 1) {
+    data_summarized_over_time <-
+      data_filtered |>
+      group_by(unit) |>
+      summarize(
+        name = name[1],
+        pop_100k                 = mean(pop_100k, na.rm = TRUE),
+        pop                      = mean(pop, na.rm = TRUE),
+        avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
+        sum_cap_new_cases        = sum(all_new_cases / pop        , na.rm = TRUE),
+        avg_cap_new_deaths       = mean(all_new_deaths / pop      , na.rm = TRUE),
+        sum_cap_new_deaths       = sum(all_new_deaths / pop       , na.rm = TRUE),
+        avg_cap_new_tests        = mean(all_new_tests / pop       , na.rm = TRUE),
+        sum_cap_new_tests        = sum(all_new_tests / pop        , na.rm = TRUE),
+        avg_all_new_cases        = mean(all_new_cases             , na.rm = TRUE),
+        sum_all_new_cases        = sum(all_new_cases              , na.rm = TRUE),
+        avg_all_new_deaths       = mean(all_new_deaths            , na.rm = TRUE),
+        sum_all_new_deaths       = sum(all_new_deaths             , na.rm = TRUE),
+        avg_all_new_tests        = mean(all_new_tests             , na.rm = TRUE),
+        sum_all_new_tests        = sum(all_new_tests              , na.rm = TRUE),
+        avg_pos                  = avg_all_new_cases / avg_all_new_tests,
+        avg_cap100k_new_cases    = mean(all_new_cases / pop_100k  , na.rm = TRUE),
+        sum_cap100k_new_cases    = sum(all_new_cases / pop_100k   , na.rm = TRUE),
+        avg_cap100k_new_deaths   = mean(all_new_deaths / pop_100k , na.rm = TRUE),
+        sum_cap100k_new_deaths   = sum(all_new_deaths / pop_100k  , na.rm = TRUE),
+        avg_cap100k_new_tests    = mean(all_new_tests / pop_100k  , na.rm = TRUE),
+        sum_cap100k_new_tests    = sum(all_new_tests / pop_100k   , na.rm = TRUE),
+        continent = continent[1],
+        income = income[1],
+        who_region = who_region[1],
+        .groups = "drop"
+      )
+  } else { # for a single day
+    data_summarized_over_time <-
+      data_filtered |>
+      group_by(unit) |>
+      summarize(
+        time = time[1],
+        name = name[1],
+        pop_100k             = mean(pop_100k, na.rm = TRUE),
+        pop                  = mean(pop, na.rm = TRUE),
+        cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
+        cap_cum_cases        = cap_cum_cases[1],
+        cap_new_deaths       = mean(all_new_deaths / pop      , na.rm = TRUE),
+        cap_cum_deaths       = cap_cum_deaths[1],
+        cap_new_tests        = mean(all_new_tests / pop       , na.rm = TRUE),
+        cap_cum_tests        = cap_cum_tests[1],
+        all_new_cases        = mean(all_new_cases             , na.rm = TRUE),
+        all_cum_cases        = all_cum_cases[1],
+        all_new_deaths       = mean(all_new_deaths            , na.rm = TRUE),
+        all_cum_deaths       = all_cum_deaths[1],
+        all_new_tests        = mean(all_new_tests             , na.rm = TRUE),
+        all_cum_tests        = all_cum_tests[1],
+        avg_pos              = all_new_cases / all_new_tests,
+        cap100k_new_cases    = mean(all_new_cases / pop_100k  , na.rm = TRUE),
+        cap100k_cum_cases    = all_cum_cases / pop_100k,
+        cap100k_new_deaths   = mean(all_new_deaths / pop_100k , na.rm = TRUE),
+        cap100k_cum_deaths   = all_cum_deaths / pop_100k,
+        cap100k_new_tests    = mean(all_new_tests / pop_100k  , na.rm = TRUE),
+        cap100k_cum_tests    = all_cum_tests / pop_100k,
+        continent = continent[1],
+        income = income[1],
+        who_region = who_region[1],
+        .groups = "drop"
+      )
+    
+  }
   data_summarized_over_time
 }
 
@@ -80,60 +117,96 @@ summarize_over_time <- function (data_filtered) {
 #' @name summarize_over_time
 #' @export
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
-
+  
   if (is.null(group) || group == "country") {
     ans <-
       data_summarized_over_time |>
       arrange(name)
     return(ans)
   }
-
+  
   stopifnot(inherits(group, "character"))
-
-  data_summarized_over_group <-
-    data_summarized_over_time |>
-    rename_with(function(x) "group", {{ group }}) |>
-    filter(!is.na(group))|>
-    group_by(group) |>
-    summarize(
-      unit = group[1],
-      name = group[1],
-      pop_100k               = sum(pop_100k,  na.rm = TRUE),
-      pop                    = sum(pop, na.rm = TRUE),
-      avg_cap_new_cases      = median(avg_cap_new_cases       , na.rm = TRUE),
-      sum_cap_new_cases      = median(sum_cap_new_cases       , na.rm = TRUE),
-      avg_cap_new_deaths     = median(avg_cap_new_deaths      , na.rm = TRUE),
-      sum_cap_new_deaths     = median(sum_cap_new_deaths      , na.rm = TRUE),
-      avg_cap_new_tests      = median(avg_cap_new_tests       , na.rm = TRUE),
-      sum_cap_new_tests      = median(sum_cap_new_tests       , na.rm = TRUE),
-      avg_all_new_cases      = median(avg_all_new_cases       , na.rm = TRUE),
-      sum_all_new_cases      = sum(sum_all_new_cases          , na.rm = TRUE),
-      avg_all_new_deaths     = median(avg_all_new_deaths      , na.rm = TRUE),
-      sum_all_new_deaths     = sum(sum_all_new_deaths         , na.rm = TRUE),
-      avg_all_new_tests      = median(avg_all_new_tests       , na.rm = TRUE),
-      sum_all_new_tests      = sum(sum_all_new_tests          , na.rm = TRUE),
-      avg_pos                = median(avg_pos                 , na.rm = TRUE),
-      avg_cap100k_new_cases  = median(avg_cap100k_new_cases   , na.rm = TRUE),
-      sum_cap100k_new_cases  = median(sum_cap100k_new_cases   , na.rm = TRUE),
-      avg_cap100k_new_deaths = median(avg_cap100k_new_deaths  , na.rm = TRUE),
-      sum_cap100k_new_deaths = median(sum_cap100k_new_deaths  , na.rm = TRUE),
-      avg_cap100k_new_tests  = median(avg_cap100k_new_tests   , na.rm = TRUE),
-      sum_cap100k_new_tests  = median(sum_cap100k_new_tests   , na.rm = TRUE),
-      .groups = "drop"
-    ) |>
+  
+  # if the data is for a time range
+  if(! "time" %in% colnames(data_summarized_over_time)) {
+    data_summarized_over_group <-
+      data_summarized_over_time |>
+      rename_with(function(x) "group", {{ group }}) |>
+      filter(!is.na(group))|>
+      group_by(group) |>
+      summarize(
+        unit = group[1],
+        name = group[1],
+        pop_100k               = sum(pop_100k,  na.rm = TRUE),
+        pop                    = sum(pop, na.rm = TRUE),
+        avg_cap_new_cases      = median(avg_cap_new_cases       , na.rm = TRUE),
+        sum_cap_new_cases      = median(sum_cap_new_cases       , na.rm = TRUE),
+        avg_cap_new_deaths     = median(avg_cap_new_deaths      , na.rm = TRUE),
+        sum_cap_new_deaths     = median(sum_cap_new_deaths      , na.rm = TRUE),
+        avg_cap_new_tests      = median(avg_cap_new_tests       , na.rm = TRUE),
+        sum_cap_new_tests      = median(sum_cap_new_tests       , na.rm = TRUE),
+        avg_all_new_cases      = median(avg_all_new_cases       , na.rm = TRUE),
+        sum_all_new_cases      = sum(sum_all_new_cases          , na.rm = TRUE),
+        avg_all_new_deaths     = median(avg_all_new_deaths      , na.rm = TRUE),
+        sum_all_new_deaths     = sum(sum_all_new_deaths         , na.rm = TRUE),
+        avg_all_new_tests      = median(avg_all_new_tests       , na.rm = TRUE),
+        sum_all_new_tests      = sum(sum_all_new_tests          , na.rm = TRUE),
+        avg_pos                = median(avg_pos                 , na.rm = TRUE),
+        avg_cap100k_new_cases  = median(avg_cap100k_new_cases   , na.rm = TRUE),
+        sum_cap100k_new_cases  = median(sum_cap100k_new_cases   , na.rm = TRUE),
+        avg_cap100k_new_deaths = median(avg_cap100k_new_deaths  , na.rm = TRUE),
+        sum_cap100k_new_deaths = median(sum_cap100k_new_deaths  , na.rm = TRUE),
+        avg_cap100k_new_tests  = median(avg_cap100k_new_tests   , na.rm = TRUE),
+        sum_cap100k_new_tests  = median(sum_cap100k_new_tests   , na.rm = TRUE),
+        .groups = "drop"
+      ) |>
       arrange(name)
-
+  } else { # for a single day
+    data_summarized_over_group <-
+      data_summarized_over_time |>
+      rename_with(function(x) "group", {{ group }}) |>
+      filter(!is.na(group))|>
+      group_by(group) |>
+      summarize(
+        unit = group[1],
+        name = group[1],
+        pop_100k               = sum(pop_100k,  na.rm = TRUE),
+        pop                    = sum(pop, na.rm = TRUE),
+        avg_cap_new_cases      = median(cap_new_cases       , na.rm = TRUE),
+        sum_cap_new_cases      = median(cap_cum_cases       , na.rm = TRUE),
+        avg_cap_new_deaths     = median(cap_new_deaths      , na.rm = TRUE),
+        sum_cap_new_deaths     = median(cap_cum_deaths      , na.rm = TRUE),
+        avg_cap_new_tests      = median(cap_new_tests       , na.rm = TRUE),
+        sum_cap_new_tests      = median(cap_cum_tests       , na.rm = TRUE),
+        avg_all_new_cases      = median(all_new_cases       , na.rm = TRUE),
+        sum_all_new_cases      = sum(all_cum_cases          , na.rm = TRUE),
+        avg_all_new_deaths     = median(all_new_deaths      , na.rm = TRUE),
+        sum_all_new_deaths     = sum(all_cum_deaths         , na.rm = TRUE),
+        avg_all_new_tests      = median(all_new_tests       , na.rm = TRUE),
+        sum_all_new_tests      = sum(all_cum_tests          , na.rm = TRUE),
+        avg_pos                = median(avg_pos                 , na.rm = TRUE),
+        avg_cap100k_new_cases  = median(cap100k_new_cases   , na.rm = TRUE),
+        sum_cap100k_new_cases  = median(cap100k_cum_cases   , na.rm = TRUE),
+        avg_cap100k_new_deaths = median(cap100k_new_deaths  , na.rm = TRUE),
+        sum_cap100k_new_deaths = median(cap100k_cum_deaths  , na.rm = TRUE),
+        avg_cap100k_new_tests  = median(cap100k_new_tests   , na.rm = TRUE),
+        sum_cap100k_new_tests  = median(cap100k_cum_tests   , na.rm = TRUE),
+        .groups = "drop"
+      ) |>
+      arrange(name)
+  }
+  
   if (group == "income") {
     data_summarized_over_group <-
       data_summarized_over_group |>
       arrange(factor(group, levels = c("Low", "Lower middle", "Upper middle", "High")))
   }
-
+  
   data_summarized_over_group <-
     data_summarized_over_group |>
     select(-group) |>
     filter(!is.na(name))
-
+  
   data_summarized_over_group
 }
 
