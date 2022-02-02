@@ -61,6 +61,15 @@ summarize_over_time <- function (data_filtered) {
       avg_all_new_tests        = mean(all_new_tests             , na.rm = TRUE),
       sum_all_new_tests        = sum(all_new_tests              , na.rm = TRUE),
       avg_pos                  = avg_all_new_cases / avg_all_new_tests,
+      all_cum_cases            = all_cum_cases[1],
+      cap_cum_cases            = cap_cum_cases[1],
+      all_cum_deaths           = all_cum_deaths[1],
+      cap_cum_deaths           = cap_cum_deaths[1],
+      all_cum_tests            = all_cum_tests[1],
+      cap_cum_tests            = cap_cum_tests[1],
+      cap100k_cum_cases        = all_cum_cases[1] / pop_100k,
+      cap100k_cum_deaths       = all_cum_deaths[1] / pop_100k,
+      cap100k_cum_tests        = all_cum_tests[1] / pop_100k,
       avg_cap100k_new_cases    = mean(all_new_cases / pop_100k  , na.rm = TRUE),
       sum_cap100k_new_cases    = sum(all_new_cases / pop_100k   , na.rm = TRUE),
       avg_cap100k_new_deaths   = mean(all_new_deaths / pop_100k , na.rm = TRUE),
@@ -82,9 +91,14 @@ summarize_over_time <- function (data_filtered) {
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
 
   if (is.null(group) || group == "country") {
-    ans <-
-      data_summarized_over_time |>
-      arrange(name)
+      colnames(data_summarized_over_time) <- 
+        colnames(data_summarized_over_time) |>
+        str_replace_all(c("avg_" = ""))
+      
+     ans <-
+       data_summarized_over_time |>
+       select(-starts_with("sum_")) |>
+       arrange(name)
     return(ans)
   }
 
