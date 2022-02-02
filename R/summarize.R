@@ -97,7 +97,7 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
       
      ans <-
        data_summarized_over_time |>
-       select(-starts_with("sum_"))
+       select(-starts_with("sum_")) |>
        arrange(name)
     return(ans)
   }
