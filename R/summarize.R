@@ -39,13 +39,16 @@
 #' data_summarized_over_time <- shinyfind::summarize_over_time(data_filtered)
 #' shinyfind::summarize_over_group(data_summarized_over_time, "income")
 #' shinyfind::summarize_over_group(data_summarized_over_time, "who_region")
-summarize_over_time <- function (data_filtered) {
-
+summarize_over_time <- function (data_filtered, by_period = FALSE) {
+  
   data_summarized_over_time <-
-    data_filtered |>
-    group_by(unit) |>
+    data_filtered |> 
+    group_conditional(unit,
+                      conditional_cols = "period",
+                      condition = by_period) |>
     summarize(
       name = name[1],
+      unit = name[1],
       pop_100k                 = mean(pop_100k, na.rm = TRUE),
       pop                      = mean(pop, na.rm = TRUE),
       avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
@@ -88,27 +91,33 @@ summarize_over_time <- function (data_filtered) {
 #' Step 2: Summarize Data Over Groups (using Median)
 #' @name summarize_over_time
 #' @export
-summarize_over_group <- function (data_summarized_over_time, group = NULL) {
-
-  if (is.null(group) || group == "country") {
-      colnames(data_summarized_over_time) <- 
-        colnames(data_summarized_over_time) |>
-        str_replace_all(c("avg_" = ""))
-      
-     ans <-
-       data_summarized_over_time |>
-       select(-starts_with("sum_")) |>
-       arrange(name)
+summarize_over_group <- function (data_summarized_over_time, group = NULL, by_period = FALSE) {
+  
+  if ((is.null(group) || group == "country") & by_period == FALSE)  {
+    colnames(data_summarized_over_time) <- 
+      colnames(data_summarized_over_time) |>
+      str_replace_all(c("avg_" = ""))
+    
+    ans <-
+      data_summarized_over_time |>
+      select(-starts_with("sum_")) |>
+      arrange(name)
     return(ans)
   }
-
+  
+  if(group == "country" & by_period == TRUE) {
+    return(data_summarized_over_time)
+  }
+  
   stopifnot(inherits(group, "character"))
-
+  
   data_summarized_over_group <-
     data_summarized_over_time |>
     rename_with(function(x) "group", {{ group }}) |>
     filter(!is.na(group))|>
-    group_by(group) |>
+    group_conditional(group,
+                      conditional_cols = "period",
+                      condition = by_period) |>
     summarize(
       unit = group[1],
       name = group[1],
@@ -135,20 +144,34 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
       sum_cap100k_new_tests  = median(sum_cap100k_new_tests   , na.rm = TRUE),
       .groups = "drop"
     ) |>
-      arrange(name)
-
+    arrange(name)
+  
   if (group == "income") {
     data_summarized_over_group <-
       data_summarized_over_group |>
       arrange(factor(group, levels = c("Low", "Lower middle", "Upper middle", "High")))
   }
-
+  
   data_summarized_over_group <-
     data_summarized_over_group |>
     select(-group) |>
     filter(!is.na(name))
-
+  
   data_summarized_over_group
+}
+
+# this function allows determining what variables to group by depending on a 
+# condition
+group_conditional <- function(.data, ..., conditional_cols, condition) {
+  base_group_vars <- quos(...)
+  conditional_group_vars <- syms(conditional_cols)
+  if (condition) {
+    .data %>%
+      group_by(!!!base_group_vars, !!!conditional_group_vars)
+  } else {
+    .data %>%
+      group_by(!!!base_group_vars)
+  }
 }
 
 
