@@ -40,12 +40,20 @@
 #' shinyfind::summarize_over_group(data_summarized_over_time, "income")
 #' shinyfind::summarize_over_group(data_summarized_over_time, "who_region")
 summarize_over_time <- function (data_filtered) {
-
+  
+  data_grouped <- 
+    if ("period" %in% colnames(data_filtered)) {
+      group_by(data_filtered, unit, period)
+    } else {
+      group_by(data_filtered, unit)
+    }
+  
   data_summarized_over_time <-
-    data_filtered |>
-    group_by(unit) |>
+    data_grouped |> 
     summarize(
+      country = name[1],
       name = name[1],
+      unit = unit[1],
       pop_100k                 = mean(pop_100k, na.rm = TRUE),
       pop                      = mean(pop, na.rm = TRUE),
       avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
@@ -89,26 +97,41 @@ summarize_over_time <- function (data_filtered) {
 #' @name summarize_over_time
 #' @export
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
-
-  if (is.null(group) || group == "country") {
-      colnames(data_summarized_over_time) <- 
-        colnames(data_summarized_over_time) |>
-        str_replace_all(c("avg_" = ""))
-      
-     ans <-
-       data_summarized_over_time |>
-       select(-starts_with("sum_")) |>
-       arrange(name)
-    return(ans)
-  }
-
-  stopifnot(inherits(group, "character"))
-
-  data_summarized_over_group <-
+  
+  is.periodic <- "period" %in% colnames(data_summarized_over_time)
+  
+  data_summarized_group <-
     data_summarized_over_time |>
     rename_with(function(x) "group", {{ group }}) |>
-    filter(!is.na(group))|>
-    group_by(group) |>
+    filter(!is.na(group))
+  
+  data_grouped <- 
+    if (is.periodic) {
+      group_by(data_summarized_group, group, period)
+    } else {
+      group_by(data_summarized_group, group)
+    }
+  
+  if ((is.null(group) || group == "country") & !is.periodic)  {
+    colnames(data_summarized_over_time) <- 
+      colnames(data_summarized_over_time) |>
+      str_replace_all(c("avg_" = ""))
+    
+    ans <-
+      data_summarized_over_time |>
+      select(-starts_with("sum_")) |>
+      arrange(name)
+    return(ans)
+  }
+  
+  if(group == "country" & is.periodic) {
+    return(data_summarized_over_time)
+  }
+  
+  stopifnot(inherits(group, "character"))
+  
+  data_summarized_over_group <-
+    data_grouped |>
     summarize(
       unit = group[1],
       name = group[1],
@@ -135,22 +158,18 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
       sum_cap100k_new_tests  = median(sum_cap100k_new_tests   , na.rm = TRUE),
       .groups = "drop"
     ) |>
-      arrange(name)
-
+    arrange(name)
+  
   if (group == "income") {
     data_summarized_over_group <-
       data_summarized_over_group |>
       arrange(factor(group, levels = c("Low", "Lower middle", "Upper middle", "High")))
   }
-
+  
   data_summarized_over_group <-
     data_summarized_over_group |>
     select(-group) |>
     filter(!is.na(name))
-
+  
   data_summarized_over_group
 }
-
-
-
-
