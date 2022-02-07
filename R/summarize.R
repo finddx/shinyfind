@@ -51,8 +51,9 @@ summarize_over_time <- function (data_filtered) {
   data_summarized_over_time <-
     data_grouped |> 
     summarize(
+      country = name[1],
       name = name[1],
-      unit = name[1],
+      unit = unit[1],
       pop_100k                 = mean(pop_100k, na.rm = TRUE),
       pop                      = mean(pop, na.rm = TRUE),
       avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
