@@ -11,18 +11,21 @@
 
 #' @export
 add_logo <- function(e, image = "img/logo_header.svg", subtitle = "Source: finddx.org/covid-19/test-tracker", height = 35, top = "auto", bottom = 20, left = "right") {
-  logo = list( 
-    logo = list(height=height, backgroundColor=list(
-      image = image))
+  logo <- list(
+    logo = list(height = height, backgroundColor = list(
+      image = image
+    ))
   )
-  e <- 
-    e |> 
-    e_title(text='{logo| }',
-            left = left,
-            bottom = bottom,
-            top = top,
-            textStyle = list(fontStyle = "normal", rich = logo),
-            subtext = subtitle,
-            itemGap = 4) 
+  e <-
+    e |>
+    e_title(
+      text = "{logo| }",
+      left = left,
+      bottom = bottom,
+      top = top,
+      textStyle = list(fontStyle = "normal", rich = logo),
+      subtext = subtitle,
+      itemGap = 4
+    )
   e
 }
