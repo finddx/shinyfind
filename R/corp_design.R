@@ -1,3 +1,19 @@
+#' @examples 
+#'
+#'page_title <- "Test Directory"
+#'extra_html <- '<p>This fully searchable directory currently lists all 
+#'                  commercially available immunoassays and molecular tests
+#'                </p>'
+#'
+#'ui <- find_dashboard_page(
+#'  banner = find_banner(page_title, extra_html = extra_html),
+#'  variants_ui("variants")
+#' )
+#' 
+#'ui <- find_dashboard_page(
+#'  title = "Test directory"
+#'  variants_ui("variants")
+#' )
 #' @export
 find_banner <- function(title, extra_html = NULL) {
   open_section <- '<section class="hero">
