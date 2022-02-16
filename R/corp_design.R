@@ -1,21 +1,17 @@
 #' @export
 find_banner <- function(title, extra_html = NULL) {
-  open_section <- htmltools::HTML('
-    <section class="hero"><span class="gradient"></span>
-  ')
+  open_section <- '<section class="hero">
+                     <span class="gradient">
+                     </span>'
   
-  heading <- htmltools::HTML('
-    
-        <div class="content">
-            <h1>', toupper(title),'</h1>
-        </div>
-    
-  ')
+  heading <- paste('<div class="content"><h1>', 
+                   toupper(title),
+                   '</h1>')
   
-  subtext <- htmltools::HTML('<p> Na wa </p>')
-  close_section <- htmltools::HTML('</section>')
-  
-  paste(open_section, heading, subtext, close_section)
+  subtext <- paste0(extra_html, "</div>")
+  close_section <- '</section>'
+  full_html <- paste0(open_section, heading, subtext, close_section)
+  htmltools::HTML(full_html)
 }
 
 #' @export
