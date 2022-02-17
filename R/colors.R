@@ -29,3 +29,18 @@ pal_find <- function(n = 14) {
   )
   find_colors[1:n]
 }
+
+
+# as discussen in GitHub....
+# gg_color_swatches(4) +
+#   scale_fill_manual(values = pal_find_regions())
+pal_find_regions <- function() {
+  find_regions <- c(
+    "#5b254e",  # europe
+    "#00a2ab",
+    "#7b97a0",
+    "#e64148"
+  )
+  find_regions
+}
+
