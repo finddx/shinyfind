@@ -4,12 +4,17 @@
 \alias{get_codebook}
 \alias{get_codebook_}
 \alias{get_codebook_extended}
+\alias{get_country_info_}
 \title{Get Codebook}
 \usage{
 get_codebook_(time = shinyfind:::today_at_sunrise())
 
 get_codebook_extended(show_cacluation = FALSE)
+
+get_country_info_(time = shinyfind:::today_at_sunrise())
 }
 \description{
+Memoised Function, updates once a day
+
 Memoised Function, updates once a day
 }
