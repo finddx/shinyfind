@@ -32,14 +32,15 @@ pal_find <- function(n = 14) {
 
 
 # as discussen in GitHub....
-# gg_color_swatches(4) +
+# gg_color_swatches(5) +
 #   scale_fill_manual(values = pal_find_regions())
 pal_find_regions <- function() {
   find_regions <- c(
-    "#5b254e",  # europe
-    "#00a2ab",
-    "#7b97a0",
-    "#e64148"
+    "#e3374b",  # asia
+    "#8c9eab",  # europe
+    "#5e2e58",  # north america
+    "#43abb6",  # oceania
+    "#ffab00"   # africa
   )
   find_regions
 }
