@@ -1,12 +1,33 @@
+#' @examples 
+#'
+#'page_title <- "Test Directory"
+#'extra_html <- '<p>This fully searchable directory currently lists all 
+#'                  commercially available immunoassays and molecular tests
+#'                </p>'
+#'
+#'ui <- find_dashboard_page(
+#'  banner = find_banner(page_title, extra_html = extra_html),
+#'  variants_ui("variants")
+#' )
+#' 
+#'ui <- find_dashboard_page(
+#'  title = "Test directory"
+#'  variants_ui("variants")
+#' )
 #' @export
-find_banner <- function(title) {
-  htmltools::HTML('
-    <section class="hero"><span class="gradient"></span>
-        <div class="content">
-            <h1>', toupper(title),'</h1>
-        </div>
-    </section>
-  ')
+find_banner <- function(title, extra_html = NULL) {
+  open_section <- '<section class="hero">
+                     <span class="gradient">
+                     </span>'
+  
+  heading <- paste('<div class="content"><h1>', 
+                   toupper(title),
+                   '</h1>')
+  
+  subtext <- paste0(extra_html, "</div>")
+  close_section <- '</section>'
+  full_html <- paste0(open_section, heading, subtext, close_section)
+  htmltools::HTML(full_html)
 }
 
 #' @export
