@@ -5,9 +5,6 @@
 #' In principle first it should be: (1) summarise by time (examples time range given
 #' below for reference) and then (2) summarise by group.
 #'
-#' The avg_cap_new_tests of the groups should be calculated using median and not
-#' mean.
-#'
 #' Problem is that if we calculate the means of groups using the sum of tests
 #' divided by the sums of the population in all countries of the groups,
 #' countries with low tests and high population skew downwards the mean and
@@ -93,7 +90,7 @@ summarize_over_time <- function (data_filtered) {
 }
 
 
-#' Step 2: Summarize Data Over Groups (using Median)
+#' Step 2: Summarize Data Over Groups
 #' @name summarize_over_time
 #' @export
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
