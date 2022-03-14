@@ -1,3 +1,17 @@
+
+# The codebook in `FINDCov19TrackerData/processed/codebook.csv` is a subset of the
+# main codebook, which is in `codebook/codebook_extended.csv`. Please update
+# there!
+
+
+# To update FINDCov19TrackerData/processed/codebook.csv, use this:
+#
+# shinyfind::get_codebook() |>
+#   select(col_type, variable) |>
+#   left_join(shinyfind::get_codebook_extended(), by = c("col_type", "variable")) |>
+#   write_csv("../FINDCov19TrackerData/processed/codebook.csv")
+
+
 #' Get Codebook
 #'
 #' Memoised Function, updates once a day
