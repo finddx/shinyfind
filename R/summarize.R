@@ -50,6 +50,7 @@ summarize_over_time <- function (data_filtered) {
   
   data_summarized_over_time <-
     data_grouped |> 
+    mutate(world = "world") |>
     summarize(
       country = name[1],
       name = name[1],
@@ -87,6 +88,7 @@ summarize_over_time <- function (data_filtered) {
       continent = continent[1],
       income = income[1],
       who_region = who_region[1],
+      world = world[1],
       .groups = "drop"
     )
   data_summarized_over_time
