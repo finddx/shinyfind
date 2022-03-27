@@ -3,9 +3,13 @@
 #' Memoised Function, updates once a day
 #'
 #' @name get_data
-get_data_ <- function(dataset, version = c("main", "preview"), repo = "FINDtestdirData", time = today_at_sunrise()) {
+get_data_ <- function(dataset,
+                      version = getOption("find.data.version", "main"),
+                      repo = "FINDtestdirData",
+                      time = today_at_sunrise()
+                      ) {
 
-  version <- match.arg(version)
+  version <- match.arg(version, choices = c("main", "preview"))
 
   branch <- if (version == "main") {
     version

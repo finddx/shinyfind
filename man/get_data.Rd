@@ -7,7 +7,7 @@
 \usage{
 get_data_(
   dataset,
-  version = "main",
+  version = getOption("find.data.version", "main"),
   repo = "FINDtestdirData",
   time = today_at_sunrise()
 )
