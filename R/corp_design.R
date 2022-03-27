@@ -1,3 +1,5 @@
+#' FIND Banner
+#'
 #' @examples 
 #'
 #'page_title <- "Test Directory"
