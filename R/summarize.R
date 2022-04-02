@@ -52,21 +52,21 @@ summarize_over_time <- function (data_filtered) {
       country = name[1],
       name = name[1],
       unit = unit[1],
-      pop_100k                 = mean(pop_100k, na.rm = TRUE),
-      pop                      = mean(pop, na.rm = TRUE),
-      avg_cap_new_cases        = mean(all_new_cases / pop       , na.rm = TRUE),
-      sum_cap_new_cases        = sum(all_new_cases / pop        , na.rm = TRUE),
-      avg_cap_new_deaths       = mean(all_new_deaths / pop      , na.rm = TRUE),
-      sum_cap_new_deaths       = sum(all_new_deaths / pop       , na.rm = TRUE),
-      avg_cap_new_tests        = mean(all_new_tests / pop       , na.rm = TRUE),
-      sum_cap_new_tests        = sum(all_new_tests / pop        , na.rm = TRUE),
-      avg_all_new_cases        = mean(all_new_cases             , na.rm = TRUE),
-      sum_all_new_cases        = sum(all_new_cases              , na.rm = TRUE),
-      avg_all_new_deaths       = mean(all_new_deaths            , na.rm = TRUE),
-      sum_all_new_deaths       = sum(all_new_deaths             , na.rm = TRUE),
-      avg_all_new_tests        = mean(all_new_tests             , na.rm = TRUE),
-      sum_all_new_tests        = sum(all_new_tests              , na.rm = TRUE),
-      avg_pos                  = avg_all_new_cases / avg_all_new_tests,
+      pop_100k                 = robust_mean(pop_100k),
+      pop                      = robust_mean(pop),
+      avg_cap_new_cases        = robust_mean(all_new_cases / pop),
+      sum_cap_new_cases        = robust_sum(all_new_cases / pop),
+      avg_cap_new_deaths       = robust_mean(all_new_deaths / pop),
+      sum_cap_new_deaths       = robust_sum(all_new_deaths / pop),
+      avg_cap_new_tests        = robust_mean(all_new_tests / pop),
+      sum_cap_new_tests        = robust_sum(all_new_tests / pop),
+      avg_all_new_cases        = robust_mean(all_new_cases),
+      sum_all_new_cases        = robust_sum(all_new_cases),
+      avg_all_new_deaths       = robust_mean(all_new_deaths),
+      sum_all_new_deaths       = robust_sum(all_new_deaths),
+      avg_all_new_tests        = robust_mean(all_new_tests),
+      sum_all_new_tests        = robust_sum(all_new_tests),
+      avg_pos                  = pmin(avg_all_new_cases / avg_all_new_tests, 1),
       all_cum_cases            = all_cum_cases[1],
       cap_cum_cases            = cap_cum_cases[1],
       all_cum_deaths           = all_cum_deaths[1],
@@ -76,12 +76,12 @@ summarize_over_time <- function (data_filtered) {
       cap100k_cum_cases        = all_cum_cases[1] / pop_100k,
       cap100k_cum_deaths       = all_cum_deaths[1] / pop_100k,
       cap100k_cum_tests        = all_cum_tests[1] / pop_100k,
-      avg_cap100k_new_cases    = mean(all_new_cases / pop_100k  , na.rm = TRUE),
-      sum_cap100k_new_cases    = sum(all_new_cases / pop_100k   , na.rm = TRUE),
-      avg_cap100k_new_deaths   = mean(all_new_deaths / pop_100k , na.rm = TRUE),
-      sum_cap100k_new_deaths   = sum(all_new_deaths / pop_100k  , na.rm = TRUE),
-      avg_cap100k_new_tests    = mean(all_new_tests / pop_100k  , na.rm = TRUE),
-      sum_cap100k_new_tests    = sum(all_new_tests / pop_100k   , na.rm = TRUE),
+      avg_cap100k_new_cases    = robust_mean(all_new_cases / pop_100k),
+      sum_cap100k_new_cases    = robust_sum(all_new_cases / pop_100k),
+      avg_cap100k_new_deaths   = robust_mean(all_new_deaths / pop_100k),
+      sum_cap100k_new_deaths   = robust_sum(all_new_deaths / pop_100k),
+      avg_cap100k_new_tests    = robust_mean(all_new_tests / pop_100k),
+      sum_cap100k_new_tests    = robust_sum(all_new_tests / pop_100k),
       continent = continent[1],
       income = income[1],
       who_region = who_region[1],
@@ -90,6 +90,33 @@ summarize_over_time <- function (data_filtered) {
     )
   data_summarized_over_time
 }
+
+
+# compute mean if data has reported until 'recently', e.g, until more than 3/4
+# of the period.
+# robust_mean(c(NA, NA, 1, 2, NA, NA))
+robust_aggregation <- function(x, threshold = 0.75, fun) {
+
+  pos_of_last_value <- tail(which(!is.na(x)), 1)
+  ans <-
+    if (pos_of_last_value / length(x) < threshold) {
+      NA
+    } else {
+      fun(x, na.rm = TRUE)
+    }
+  ans
+
+}
+
+robust_mean <- function(x, threshold = 0.75, fun)  {
+  robust_aggregation(x, threshold = threshold, fun = mean)
+}
+
+robust_sum <- function(x, threshold = 0.75, fun)  {
+  robust_aggregation(x, threshold = threshold, fun = sum)
+}
+
+
 
 
 #' Step 2: Summarize Data Over Groups
