@@ -95,15 +95,20 @@ summarize_over_time <- function (data_filtered) {
 # compute mean if data has reported until 'recently', e.g, until more than 3/4
 # of the period.
 # robust_mean(c(NA, NA, 1, 2, NA, NA))
+# robust_mean(c(NA, NA, 1, 2, 1, NA))
+# robust_mean(c(NA, NA))
 robust_aggregation <- function(x, threshold = 0.75, fun) {
 
   pos_of_last_value <- tail(which(!is.na(x)), 1)
+  if (length(pos_of_last_value) == 0) return(NA_real_)
+
   ans <-
     if (pos_of_last_value / length(x) < threshold) {
       NA
     } else {
       fun(x, na.rm = TRUE)
     }
+
   ans
 
 }
