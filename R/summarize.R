@@ -2,15 +2,19 @@
 #'
 #' All apps should use this functions to do aggregations!
 #'
-#' In principle first it should be: (1) summarise by time (examples time range given
-#' below for reference) and then (2) summarise by group.
+#' Aggregation over period: If data is missing during more than 25% of the most
+#' recent observations, the period is considered incomplete, no aggregated
+#' value is computed.
 #'
-#' Problem is that if we calculate the means of groups using the sum of tests
-#' divided by the sums of the population in all countries of the groups,
-#' countries with low tests and high population skew downwards the mean and
-#' vice versa.
+#' Aggregation over group: Groups aggregations use all the countries for which
+#' data is available. If a ratio is computed (e.g., per-captia measures,
+#' positivity rate), we only consider observations that have values both for
+#' the nominator and the denominator. E.g., in order to calculate tests
+#' per-capita for a continent, a country is only used if reports both test and
+#' population data.
 #'
-#' See discussiofn in: https://github.com/dsbbfinddx/shinyfindapps/issues/142#issuecomment-1023435405
+#' This is a deviation from an older discussion in: https://github.com/dsbbfinddx/shinyfindapps/issues/142#issuecomment-1023435405
+#'
 #' @export
 #' @examples
 #'
