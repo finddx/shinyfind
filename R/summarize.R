@@ -166,27 +166,44 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
     summarize(
       unit = group[1],
       name = group[1],
+
+      avg_cap_new_cases      = robust_ratio(avg_all_new_cases, pop),
+      sum_cap_new_cases      = robust_ratio(sum_all_new_cases, pop),
+      avg_cap_new_deaths     = robust_ratio(avg_all_new_deaths, pop),
+      sum_cap_new_deaths     = robust_ratio(sum_all_new_deaths, pop),
+      avg_cap_new_tests      = robust_ratio(avg_all_new_tests, pop),
+      sum_cap_new_tests      = robust_ratio(sum_all_new_tests, pop),
+
+      avg_all_new_cases      = mean(avg_all_new_cases       , na.rm = TRUE),
+      sum_all_new_cases      = sum(sum_all_new_cases        , na.rm = TRUE),
+      avg_all_new_deaths     = mean(avg_all_new_deaths      , na.rm = TRUE),
+      sum_all_new_deaths     = sum(sum_all_new_deaths       , na.rm = TRUE),
+      avg_all_new_tests      = mean(avg_all_new_tests       , na.rm = TRUE),
+      sum_all_new_tests      = sum(sum_all_new_tests        , na.rm = TRUE),
+      avg_pos                = robust_ratio(avg_all_new_cases, avg_all_new_tests),
+
+      cap_cum_cases          = robust_ratio(all_cum_cases, pop),
+      all_cum_cases          = sum(all_cum_cases, na.rm = TRUE),
+      cap_cum_deaths         = robust_ratio(all_cum_deaths, pop),
+      all_cum_deaths         = sum(all_cum_deaths, na.rm = TRUE),
+      cap_cum_tests          = robust_ratio(all_cum_tests, pop),
+      all_cum_tests          = sum(all_cum_tests, na.rm = TRUE),
+
+      cap100k_cum_cases      = robust_ratio(all_cum_cases, pop_100k),
+      cap100k_cum_deaths     = robust_ratio(all_cum_deaths, pop_100k),
+      cap100k_cum_tests      = robust_ratio(all_cum_tests, pop_100k),
+
+      avg_cap100k_new_cases  = robust_ratio(avg_all_new_cases, pop_100k),
+      sum_cap100k_new_cases  = robust_ratio(sum_all_new_cases, pop_100k),
+      avg_cap100k_new_deaths = robust_ratio(avg_all_new_deaths, pop_100k),
+      sum_cap100k_new_deaths = robust_ratio(sum_all_new_deaths, pop_100k),
+      avg_cap100k_new_tests  = robust_ratio(avg_all_new_tests, pop_100k),
+      sum_cap100k_new_tests  = robust_ratio(sum_all_new_tests, pop_100k),
+
+      # needs to be done in the end, pop and pop_100k above should be from non summarized values
       pop_100k               = sum(pop_100k,  na.rm = TRUE),
       pop                    = sum(pop, na.rm = TRUE),
-      avg_cap_new_cases      = mean(avg_cap_new_cases       , na.rm = TRUE),
-      sum_cap_new_cases      = mean(sum_cap_new_cases       , na.rm = TRUE),
-      avg_cap_new_deaths     = mean(avg_cap_new_deaths      , na.rm = TRUE),
-      sum_cap_new_deaths     = mean(sum_cap_new_deaths      , na.rm = TRUE),
-      avg_cap_new_tests      = mean(avg_cap_new_tests       , na.rm = TRUE),
-      sum_cap_new_tests      = mean(sum_cap_new_tests       , na.rm = TRUE),
-      avg_all_new_cases      = mean(avg_all_new_cases       , na.rm = TRUE),
-      sum_all_new_cases      = sum(sum_all_new_cases          , na.rm = TRUE),
-      avg_all_new_deaths     = mean(avg_all_new_deaths      , na.rm = TRUE),
-      sum_all_new_deaths     = sum(sum_all_new_deaths         , na.rm = TRUE),
-      avg_all_new_tests      = mean(avg_all_new_tests       , na.rm = TRUE),
-      sum_all_new_tests      = sum(sum_all_new_tests          , na.rm = TRUE),
-      avg_pos                = avg_all_new_cases / avg_all_new_tests,
-      avg_cap100k_new_cases  = mean(avg_cap100k_new_cases   , na.rm = TRUE),
-      sum_cap100k_new_cases  = mean(sum_cap100k_new_cases   , na.rm = TRUE),
-      avg_cap100k_new_deaths = mean(avg_cap100k_new_deaths  , na.rm = TRUE),
-      sum_cap100k_new_deaths = mean(sum_cap100k_new_deaths  , na.rm = TRUE),
-      avg_cap100k_new_tests  = mean(avg_cap100k_new_tests   , na.rm = TRUE),
-      sum_cap100k_new_tests  = mean(sum_cap100k_new_tests   , na.rm = TRUE),
+
       .groups = "drop"
     ) |>
     arrange(name)
@@ -204,3 +221,15 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
   
   data_summarized_over_group
 }
+
+
+# Only use units that appear above an below the line
+#
+# robust_ratio(c(2, 2, 3, NA), c(2, 2, NA, 100))
+robust_ratio <- funciton(nominator, denominator) {
+  is_missing <- is.na(nominator) | is.na(denominator)
+  sum(nominator[!is_missing], na.rm = TRUE) / sum(denominator[!is_missing], na.rm = TRUE)
+}
+
+
+
