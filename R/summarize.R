@@ -230,7 +230,7 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
 # Only use units that appear above an below the line
 #
 # robust_ratio(c(2, 2, 3, NA), c(2, 2, NA, 100))
-robust_ratio <- funciton(nominator, denominator) {
+robust_ratio <- function(nominator, denominator) {
   is_missing <- is.na(nominator) | is.na(denominator)
   sum(nominator[!is_missing], na.rm = TRUE) / sum(denominator[!is_missing], na.rm = TRUE)
 }
