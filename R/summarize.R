@@ -129,7 +129,7 @@ robust_time_series_sum <- function(x, threshold = 0.75, fun)  {
 
 
 #' Step 2: Summarize Data Over Groups
-#' @name summarize_over_time
+#' @name summarize_over_group
 #' @export
 summarize_over_group <- function (data_summarized_over_time, group = NULL) {
   
