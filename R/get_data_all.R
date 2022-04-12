@@ -74,8 +74,8 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
   # check if newer data is available in FINDCov19TrackerData
   data_all <- check_for_update("data_all",
-    download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/data_all.csv",
-    heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1",
+    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
+    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1",
     col_spec = list(
       .default = col_double(),
       set = col_character(),
@@ -87,8 +87,8 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
   unit_info = check_for_update("unit_info",
-    download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/unit_info.csv",
-    heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Funit_info.csv&page=1&per_page=1"
+    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
+    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Funit_info.csv&page=1&per_page=1"
   )
 
 
@@ -114,7 +114,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
       all_new_cases, all_cum_deaths, all_new_deaths, all_cum_tests,
       all_new_tests, pos
     ) %>%
-    # https://github.com/dsbbfinddx/FINDCov19TrackerShiny/issues/36
+    # https://github.com/finddx/FINDCov19TrackerShiny/issues/36
     mutate(pos = if_else(pos > 1, NA_real_, pos)) %>%
     # quadrupple pos series, to have all combinations
     mutate(pos = 100 * pos) %>%
@@ -147,7 +147,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
       filter(!is.na(country))
 
     country_info_raw <- readr::read_csv(
-      "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/raw/country_info.csv",
+      "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/raw/country_info.csv",
       col_types = readr::cols()
     )
 
@@ -166,13 +166,13 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     rename(country = alpha3)
   
   # segregated_tests = check_for_update("unit_info",
-  #   download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/automated/segregated_tests.csv",
-  #   heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_tests.csv&page=1&per_page=1"
+  #   download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/automated/segregated_tests.csv",
+  #   heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_tests.csv&page=1&per_page=1"
   # )
 
   segregated_data = check_for_update("segregated_data",
-    download_url = "https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
-    heartbeat_url = "https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_data.csv&page=1&per_page=1"
+    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
+    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_data.csv&page=1&per_page=1"
   )
 
 
@@ -225,14 +225,14 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     left_join(country_symbol, by = c("unit" = "country")) %>%
     mutate(symbol = coalesce(symbol, " ")) %>%
     filter(!is.na(unit)) %>%
-    # https://github.com/dsbbfinddx/FINDCov19TrackerShiny/issues/36
+    # https://github.com/finddx/FINDCov19TrackerShiny/issues/36
     mutate(pos = if_else(pos > 1, NA_real_, pos)) %>%
     mutate(pos = 100 * pos) %>%
     mutate_at(vars(pos, deaths, tests, cases), function(e) if_else(e > 50, round(e), round(e,1)))  %>%  # do not show decimals on large rates
     mutate(latest_test_date = as.character(latest_test_date)) %>%
     left_join(select(pcr_rapid, unit, pcr_share), by = "unit")
 
-  data_last_update <- readr::read_csv("https://raw.githubusercontent.com/dsbbfinddx/FINDCov19TrackerData/master/issues/countries-last-update.csv",
+  data_last_update <- readr::read_csv("https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/issues/countries-last-update.csv",
                                       col_types = readr::cols())
   
   country_last_update_info <-
@@ -256,7 +256,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   # e_common(font_family = "roboto,sans-serif", theme = "westeros")
 
 
-  last_data_update <- curl::curl_fetch_memory("https://api.github.com/repos/dsbbfinddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1")$modified
+  last_data_update <- curl::curl_fetch_memory("https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1")$modified
 
   lst(
     shiny_data,

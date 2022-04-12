@@ -10,7 +10,7 @@
 #' countries with low tests and high population skew downwards the mean and
 #' vice versa.
 #'
-#' See discussiofn in: https://github.com/dsbbfinddx/shinyfindapps/issues/142#issuecomment-1023435405
+#' See discussiofn in: https://github.com/finddx/shinyfindapps/issues/142#issuecomment-1023435405
 #' @export
 #' @examples
 #'
