@@ -18,7 +18,7 @@ get_data_ <- function(dataset,
   }
 
   url <- paste0(
-    "https://raw.githubusercontent.com/dsbbfinddx/", repo, "/", branch, "/data/", dataset, ".csv"
+    "https://raw.githubusercontent.com/finddx/", repo, "/", branch, "/data/", dataset, ".csv"
   )
   readr::read_csv(url, show_col_types = FALSE)
 }
