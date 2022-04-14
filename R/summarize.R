@@ -15,6 +15,7 @@
 #'
 #' This is a deviation from an older discussion in: https://github.com/dsbbfinddx/shinyfindapps/issues/142#issuecomment-1023435405
 #'
+#' See discussiofn in: https://github.com/finddx/shinyfindapps/issues/142#issuecomment-1023435405
 #' @export
 #' @examples
 #'

@@ -5,5 +5,5 @@ Needed to run apps from shinyfindapps.
 To install:
 
 ```r
-remotes::install_github("dsbbfinddx/shinyfind")
+remotes::install_github("finddx/shinyfind")
 ```
