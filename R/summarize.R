@@ -42,7 +42,11 @@
 #' shinyfind::summarize_over_group(data_summarized_over_time, "income")
 #' shinyfind::summarize_over_group(data_summarized_over_time, "who_region")
 summarize_over_time <- function (data_filtered) {
-  
+
+  data_filtered <-
+    data_filtered |>
+    arrange(unit, time)
+
   data_grouped <- 
     if ("period" %in% colnames(data_filtered)) {
       group_by(data_filtered, unit, period)
@@ -72,15 +76,15 @@ summarize_over_time <- function (data_filtered) {
       avg_all_new_tests        = robust_time_series_mean(all_new_tests),
       sum_all_new_tests        = robust_time_series_sum(all_new_tests),
       avg_pos                  = pmin(avg_all_new_cases / avg_all_new_tests, 1),
-      all_cum_cases            = all_cum_cases[1],
-      cap_cum_cases            = cap_cum_cases[1],
-      all_cum_deaths           = all_cum_deaths[1],
-      cap_cum_deaths           = cap_cum_deaths[1],
-      all_cum_tests            = all_cum_tests[1],
-      cap_cum_tests            = cap_cum_tests[1],
-      cap100k_cum_cases        = all_cum_cases[1] / pop_100k,
-      cap100k_cum_deaths       = all_cum_deaths[1] / pop_100k,
-      cap100k_cum_tests        = all_cum_tests[1] / pop_100k,
+      all_cum_cases            = all_cum_cases[n()],
+      all_cum_deaths           = all_cum_deaths[n()],
+      all_cum_tests            = all_cum_tests[n()],
+      cap_cum_cases            = all_cum_cases[n()] / pop,
+      cap_cum_deaths           = all_cum_deaths[n()] / pop,
+      cap_cum_tests            = all_cum_tests[n()] / pop,
+      cap100k_cum_cases        = all_cum_cases[n()] / pop_100k,
+      cap100k_cum_deaths       = all_cum_deaths[n()] / pop_100k,
+      cap100k_cum_tests        = all_cum_tests[n()] / pop_100k,
       avg_cap100k_new_cases    = robust_time_series_mean(all_new_cases / pop_100k),
       sum_cap100k_new_cases    = robust_time_series_sum(all_new_cases / pop_100k),
       avg_cap100k_new_deaths   = robust_time_series_mean(all_new_deaths / pop_100k),
