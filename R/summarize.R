@@ -62,32 +62,32 @@ summarize_over_time <- function (data_filtered) {
       name = name[1],
       unit = unit[1],
 
-      pop_100k                 = robust_time_series_mean(pop_100k),
-      pop                      = robust_time_series_mean(pop),
+      pop_100k                 = mean_discarding_incomplete(pop_100k),
+      pop                      = mean_discarding_incomplete(pop),
 
       # summmarize new values over time
-      all_new_cases        = robust_time_series_mean(all_new_cases),
-      sum_all_new_cases        = robust_time_series_sum(all_new_cases),
-      all_new_deaths       = robust_time_series_mean(all_new_deaths),
-      sum_all_new_deaths       = robust_time_series_sum(all_new_deaths),
-      all_new_tests        = robust_time_series_mean(all_new_tests),
-      sum_all_new_tests        = robust_time_series_sum(all_new_tests),
+      all_new_cases        = mean_discarding_incomplete(all_new_cases),
+      sum_all_new_cases        = sum_discarding_incomplete(all_new_cases),
+      all_new_deaths       = mean_discarding_incomplete(all_new_deaths),
+      sum_all_new_deaths       = sum_discarding_incomplete(all_new_deaths),
+      all_new_tests        = mean_discarding_incomplete(all_new_tests),
+      sum_all_new_tests        = sum_discarding_incomplete(all_new_tests),
 
       # summmarize new per capita values over time
       # (pop and pop_100k are alrady summarized, and constant over time)
-      cap_new_cases        = robust_time_series_mean(all_new_cases / pop),
-      sum_cap_new_cases        = robust_time_series_sum(all_new_cases / pop),
-      cap_new_deaths       = robust_time_series_mean(all_new_deaths / pop),
-      sum_cap_new_deaths       = robust_time_series_sum(all_new_deaths / pop),
-      cap_new_tests        = robust_time_series_mean(all_new_tests / pop),
-      sum_cap_new_tests        = robust_time_series_sum(all_new_tests / pop),
+      cap_new_cases        = mean_discarding_incomplete(all_new_cases / pop),
+      sum_cap_new_cases        = sum_discarding_incomplete(all_new_cases / pop),
+      cap_new_deaths       = mean_discarding_incomplete(all_new_deaths / pop),
+      sum_cap_new_deaths       = sum_discarding_incomplete(all_new_deaths / pop),
+      cap_new_tests        = mean_discarding_incomplete(all_new_tests / pop),
+      sum_cap_new_tests        = sum_discarding_incomplete(all_new_tests / pop),
 
-      cap100k_new_cases    = robust_time_series_mean(all_new_cases / pop_100k),
-      sum_cap100k_new_cases    = robust_time_series_sum(all_new_cases / pop_100k),
-      cap100k_new_deaths   = robust_time_series_mean(all_new_deaths / pop_100k),
-      sum_cap100k_new_deaths   = robust_time_series_sum(all_new_deaths / pop_100k),
-      cap100k_new_tests    = robust_time_series_mean(all_new_tests / pop_100k),
-      sum_cap100k_new_tests    = robust_time_series_sum(all_new_tests / pop_100k),
+      cap100k_new_cases    = mean_discarding_incomplete(all_new_cases / pop_100k),
+      sum_cap100k_new_cases    = sum_discarding_incomplete(all_new_cases / pop_100k),
+      cap100k_new_deaths   = mean_discarding_incomplete(all_new_deaths / pop_100k),
+      sum_cap100k_new_deaths   = sum_discarding_incomplete(all_new_deaths / pop_100k),
+      cap100k_new_tests    = mean_discarding_incomplete(all_new_tests / pop_100k),
+      sum_cap100k_new_tests    = sum_discarding_incomplete(all_new_tests / pop_100k),
 
       # cumulated values: take last value in group
       all_cum_cases            = all_cum_cases[n()],
@@ -119,7 +119,7 @@ summarize_over_time <- function (data_filtered) {
 # robust_mean(c(NA, NA, 1, 2, NA, NA))
 # robust_mean(c(NA, NA, 1, 2, 1, NA))
 # robust_mean(c(NA, NA))
-robust_time_series_aggregation <- function(x, threshold = 0.75, fun) {
+aggregation_discarding_incomplete <- function(x, threshold = 0.75, fun) {
 
   pos_of_last_value <- tail(which(!is.na(x)), 1)
   if (length(pos_of_last_value) == 0) return(NA_real_)
@@ -135,12 +135,12 @@ robust_time_series_aggregation <- function(x, threshold = 0.75, fun) {
 
 }
 
-robust_time_series_mean <- function(x, threshold = 0.75, fun)  {
-  robust_time_series_aggregation(x, threshold = threshold, fun = mean)
+mean_discarding_incomplete <- function(x, threshold = 0.75, fun)  {
+  aggregation_discarding_incomplete(x, threshold = threshold, fun = mean)
 }
 
-robust_time_series_sum <- function(x, threshold = 0.75, fun)  {
-  robust_time_series_aggregation(x, threshold = threshold, fun = sum)
+sum_discarding_incomplete <- function(x, threshold = 0.75, fun)  {
+  aggregation_discarding_incomplete(x, threshold = threshold, fun = sum)
 }
 
 
