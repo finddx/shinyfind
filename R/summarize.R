@@ -61,36 +61,49 @@ summarize_over_time <- function (data_filtered) {
       country = name[1],
       name = name[1],
       unit = unit[1],
+
       pop_100k                 = robust_time_series_mean(pop_100k),
       pop                      = robust_time_series_mean(pop),
-      avg_cap_new_cases        = robust_time_series_mean(all_new_cases / pop),
-      sum_cap_new_cases        = robust_time_series_sum(all_new_cases / pop),
-      avg_cap_new_deaths       = robust_time_series_mean(all_new_deaths / pop),
-      sum_cap_new_deaths       = robust_time_series_sum(all_new_deaths / pop),
-      avg_cap_new_tests        = robust_time_series_mean(all_new_tests / pop),
-      sum_cap_new_tests        = robust_time_series_sum(all_new_tests / pop),
+
+      # summmarize new values over time
       avg_all_new_cases        = robust_time_series_mean(all_new_cases),
       sum_all_new_cases        = robust_time_series_sum(all_new_cases),
       avg_all_new_deaths       = robust_time_series_mean(all_new_deaths),
       sum_all_new_deaths       = robust_time_series_sum(all_new_deaths),
       avg_all_new_tests        = robust_time_series_mean(all_new_tests),
       sum_all_new_tests        = robust_time_series_sum(all_new_tests),
-      avg_pos                  = pmin(avg_all_new_cases / avg_all_new_tests, 1),
-      all_cum_cases            = all_cum_cases[n()],
-      all_cum_deaths           = all_cum_deaths[n()],
-      all_cum_tests            = all_cum_tests[n()],
-      cap_cum_cases            = all_cum_cases[n()] / pop,
-      cap_cum_deaths           = all_cum_deaths[n()] / pop,
-      cap_cum_tests            = all_cum_tests[n()] / pop,
-      cap100k_cum_cases        = all_cum_cases[n()] / pop_100k,
-      cap100k_cum_deaths       = all_cum_deaths[n()] / pop_100k,
-      cap100k_cum_tests        = all_cum_tests[n()] / pop_100k,
+
+      # summmarize new per capita values over time
+      # (pop and pop_100k are alrady summarized, and constant over time)
+      avg_cap_new_cases        = robust_time_series_mean(all_new_cases / pop),
+      sum_cap_new_cases        = robust_time_series_sum(all_new_cases / pop),
+      avg_cap_new_deaths       = robust_time_series_mean(all_new_deaths / pop),
+      sum_cap_new_deaths       = robust_time_series_sum(all_new_deaths / pop),
+      avg_cap_new_tests        = robust_time_series_mean(all_new_tests / pop),
+      sum_cap_new_tests        = robust_time_series_sum(all_new_tests / pop),
+
       avg_cap100k_new_cases    = robust_time_series_mean(all_new_cases / pop_100k),
       sum_cap100k_new_cases    = robust_time_series_sum(all_new_cases / pop_100k),
       avg_cap100k_new_deaths   = robust_time_series_mean(all_new_deaths / pop_100k),
       sum_cap100k_new_deaths   = robust_time_series_sum(all_new_deaths / pop_100k),
       avg_cap100k_new_tests    = robust_time_series_mean(all_new_tests / pop_100k),
       sum_cap100k_new_tests    = robust_time_series_sum(all_new_tests / pop_100k),
+
+      # cumulated values: take last value in group
+      all_cum_cases            = all_cum_cases[n()],
+      all_cum_deaths           = all_cum_deaths[n()],
+      all_cum_tests            = all_cum_tests[n()],
+      # per capita: take last value per captia in group
+      cap_cum_cases            = all_cum_cases[n()] / pop,
+      cap_cum_deaths           = all_cum_deaths[n()] / pop,
+      cap_cum_tests            = all_cum_tests[n()] / pop,
+      cap100k_cum_cases        = all_cum_cases[n()] / pop_100k,
+      cap100k_cum_deaths       = all_cum_deaths[n()] / pop_100k,
+      cap100k_cum_tests        = all_cum_tests[n()] / pop_100k,
+
+      # positivity: ratio of summarized cases and test, constrain <= 1
+      avg_pos                  = pmin(avg_all_new_cases / avg_all_new_tests, 1),
+
       continent = continent[1],
       income = income[1],
       who_region = who_region[1],
@@ -176,6 +189,11 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
       unit = group[1],
       name = group[1],
 
+      # positivity: ratio of summarized cases and test (for countries where both
+      # values exist), constrain <= 1
+      avg_pos                = pmin(robust_ratio(avg_all_new_cases, avg_all_new_tests), 1),
+
+      # summmarize new per capita values over group (using not yet aggregated values)
       avg_cap_new_cases      = robust_ratio(avg_all_new_cases, pop),
       sum_cap_new_cases      = robust_ratio(sum_all_new_cases, pop),
       avg_cap_new_deaths     = robust_ratio(avg_all_new_deaths, pop),
@@ -183,31 +201,34 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
       avg_cap_new_tests      = robust_ratio(avg_all_new_tests, pop),
       sum_cap_new_tests      = robust_ratio(sum_all_new_tests, pop),
 
-      avg_all_new_cases      = mean(avg_all_new_cases       , na.rm = TRUE),
-      sum_all_new_cases      = sum(sum_all_new_cases        , na.rm = TRUE),
-      avg_all_new_deaths     = mean(avg_all_new_deaths      , na.rm = TRUE),
-      sum_all_new_deaths     = sum(sum_all_new_deaths       , na.rm = TRUE),
-      avg_all_new_tests      = mean(avg_all_new_tests       , na.rm = TRUE),
-      sum_all_new_tests      = sum(sum_all_new_tests        , na.rm = TRUE),
-      avg_pos                = robust_ratio(avg_all_new_cases, avg_all_new_tests),
-
-      cap_cum_cases          = robust_ratio(all_cum_cases, pop),
-      all_cum_cases          = sum(all_cum_cases, na.rm = TRUE),
-      cap_cum_deaths         = robust_ratio(all_cum_deaths, pop),
-      all_cum_deaths         = sum(all_cum_deaths, na.rm = TRUE),
-      cap_cum_tests          = robust_ratio(all_cum_tests, pop),
-      all_cum_tests          = sum(all_cum_tests, na.rm = TRUE),
-
-      cap100k_cum_cases      = robust_ratio(all_cum_cases, pop_100k),
-      cap100k_cum_deaths     = robust_ratio(all_cum_deaths, pop_100k),
-      cap100k_cum_tests      = robust_ratio(all_cum_tests, pop_100k),
-
       avg_cap100k_new_cases  = robust_ratio(avg_all_new_cases, pop_100k),
       sum_cap100k_new_cases  = robust_ratio(sum_all_new_cases, pop_100k),
       avg_cap100k_new_deaths = robust_ratio(avg_all_new_deaths, pop_100k),
       sum_cap100k_new_deaths = robust_ratio(sum_all_new_deaths, pop_100k),
       avg_cap100k_new_tests  = robust_ratio(avg_all_new_tests, pop_100k),
       sum_cap100k_new_tests  = robust_ratio(sum_all_new_tests, pop_100k),
+
+      # summmarize new values over group
+      avg_all_new_cases      = mean(avg_all_new_cases       , na.rm = TRUE),
+      sum_all_new_cases      = sum(sum_all_new_cases        , na.rm = TRUE),
+      avg_all_new_deaths     = mean(avg_all_new_deaths      , na.rm = TRUE),
+      sum_all_new_deaths     = sum(sum_all_new_deaths       , na.rm = TRUE),
+      avg_all_new_tests      = mean(avg_all_new_tests       , na.rm = TRUE),
+      sum_all_new_tests      = sum(sum_all_new_tests        , na.rm = TRUE),
+
+      # per capita: take last value per captia in group (using not yet aggregated values)
+      cap_cum_cases          = robust_ratio(all_cum_cases, pop),
+      cap_cum_deaths         = robust_ratio(all_cum_deaths, pop),
+      cap_cum_tests          = robust_ratio(all_cum_tests, pop),
+
+      cap100k_cum_cases      = robust_ratio(all_cum_cases, pop_100k),
+      cap100k_cum_deaths     = robust_ratio(all_cum_deaths, pop_100k),
+      cap100k_cum_tests      = robust_ratio(all_cum_tests, pop_100k),
+
+      # cumulated values: sum over group
+      all_cum_cases          = sum(all_cum_cases, na.rm = TRUE),
+      all_cum_deaths         = sum(all_cum_deaths, na.rm = TRUE),
+      all_cum_tests          = sum(all_cum_tests, na.rm = TRUE),
 
       # needs to be done in the end, pop and pop_100k above should be from non summarized values
       pop_100k               = sum(pop_100k,  na.rm = TRUE),
