@@ -66,27 +66,27 @@ summarize_over_time <- function (data_filtered) {
       pop                      = robust_time_series_mean(pop),
 
       # summmarize new values over time
-      avg_all_new_cases        = robust_time_series_mean(all_new_cases),
+      all_new_cases        = robust_time_series_mean(all_new_cases),
       sum_all_new_cases        = robust_time_series_sum(all_new_cases),
-      avg_all_new_deaths       = robust_time_series_mean(all_new_deaths),
+      all_new_deaths       = robust_time_series_mean(all_new_deaths),
       sum_all_new_deaths       = robust_time_series_sum(all_new_deaths),
-      avg_all_new_tests        = robust_time_series_mean(all_new_tests),
+      all_new_tests        = robust_time_series_mean(all_new_tests),
       sum_all_new_tests        = robust_time_series_sum(all_new_tests),
 
       # summmarize new per capita values over time
       # (pop and pop_100k are alrady summarized, and constant over time)
-      avg_cap_new_cases        = robust_time_series_mean(all_new_cases / pop),
+      cap_new_cases        = robust_time_series_mean(all_new_cases / pop),
       sum_cap_new_cases        = robust_time_series_sum(all_new_cases / pop),
-      avg_cap_new_deaths       = robust_time_series_mean(all_new_deaths / pop),
+      cap_new_deaths       = robust_time_series_mean(all_new_deaths / pop),
       sum_cap_new_deaths       = robust_time_series_sum(all_new_deaths / pop),
-      avg_cap_new_tests        = robust_time_series_mean(all_new_tests / pop),
+      cap_new_tests        = robust_time_series_mean(all_new_tests / pop),
       sum_cap_new_tests        = robust_time_series_sum(all_new_tests / pop),
 
-      avg_cap100k_new_cases    = robust_time_series_mean(all_new_cases / pop_100k),
+      cap100k_new_cases    = robust_time_series_mean(all_new_cases / pop_100k),
       sum_cap100k_new_cases    = robust_time_series_sum(all_new_cases / pop_100k),
-      avg_cap100k_new_deaths   = robust_time_series_mean(all_new_deaths / pop_100k),
+      cap100k_new_deaths   = robust_time_series_mean(all_new_deaths / pop_100k),
       sum_cap100k_new_deaths   = robust_time_series_sum(all_new_deaths / pop_100k),
-      avg_cap100k_new_tests    = robust_time_series_mean(all_new_tests / pop_100k),
+      cap100k_new_tests    = robust_time_series_mean(all_new_tests / pop_100k),
       sum_cap100k_new_tests    = robust_time_series_sum(all_new_tests / pop_100k),
 
       # cumulated values: take last value in group
@@ -102,7 +102,7 @@ summarize_over_time <- function (data_filtered) {
       cap100k_cum_tests        = all_cum_tests[n()] / pop_100k,
 
       # positivity: ratio of summarized cases and test, constrain <= 1
-      avg_pos                  = pmin(avg_all_new_cases / avg_all_new_tests, 1),
+      pos                  = pmin(all_new_cases / all_new_tests, 1),
 
       continent = continent[1],
       income = income[1],
@@ -166,9 +166,6 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
     }
   
   if ((is.null(group) || group == "country") & !is.periodic)  {
-    colnames(data_summarized_over_time) <- 
-      colnames(data_summarized_over_time) |>
-      str_replace_all(c("avg_" = ""))
     
     ans <-
       data_summarized_over_time |>
@@ -191,30 +188,30 @@ summarize_over_group <- function (data_summarized_over_time, group = NULL) {
 
       # positivity: ratio of summarized cases and test (for countries where both
       # values exist), constrain <= 1
-      avg_pos                = pmin(robust_ratio(avg_all_new_cases, avg_all_new_tests), 1),
+      pos                    = pmin(robust_ratio(all_new_cases, all_new_tests), 1),
 
       # summmarize new per capita values over group (using not yet aggregated values)
-      avg_cap_new_cases      = robust_ratio(avg_all_new_cases, pop),
+      cap_new_cases          = robust_ratio(all_new_cases, pop),
       sum_cap_new_cases      = robust_ratio(sum_all_new_cases, pop),
-      avg_cap_new_deaths     = robust_ratio(avg_all_new_deaths, pop),
+      cap_new_deaths         = robust_ratio(all_new_deaths, pop),
       sum_cap_new_deaths     = robust_ratio(sum_all_new_deaths, pop),
-      avg_cap_new_tests      = robust_ratio(avg_all_new_tests, pop),
+      cap_new_tests          = robust_ratio(all_new_tests, pop),
       sum_cap_new_tests      = robust_ratio(sum_all_new_tests, pop),
 
-      avg_cap100k_new_cases  = robust_ratio(avg_all_new_cases, pop_100k),
+      cap100k_new_cases      = robust_ratio(all_new_cases, pop_100k),
       sum_cap100k_new_cases  = robust_ratio(sum_all_new_cases, pop_100k),
-      avg_cap100k_new_deaths = robust_ratio(avg_all_new_deaths, pop_100k),
+      cap100k_new_deaths     = robust_ratio(all_new_deaths, pop_100k),
       sum_cap100k_new_deaths = robust_ratio(sum_all_new_deaths, pop_100k),
-      avg_cap100k_new_tests  = robust_ratio(avg_all_new_tests, pop_100k),
+      cap100k_new_tests      = robust_ratio(all_new_tests, pop_100k),
       sum_cap100k_new_tests  = robust_ratio(sum_all_new_tests, pop_100k),
 
       # summmarize new values over group
-      avg_all_new_cases      = mean(avg_all_new_cases       , na.rm = TRUE),
-      sum_all_new_cases      = sum(sum_all_new_cases        , na.rm = TRUE),
-      avg_all_new_deaths     = mean(avg_all_new_deaths      , na.rm = TRUE),
-      sum_all_new_deaths     = sum(sum_all_new_deaths       , na.rm = TRUE),
-      avg_all_new_tests      = mean(avg_all_new_tests       , na.rm = TRUE),
-      sum_all_new_tests      = sum(sum_all_new_tests        , na.rm = TRUE),
+      all_new_cases          = mean(all_new_cases       , na.rm = TRUE),
+      sum_all_new_cases      = sum(sum_all_new_cases    , na.rm = TRUE),
+      all_new_deaths         = mean(all_new_deaths      , na.rm = TRUE),
+      sum_all_new_deaths     = sum(sum_all_new_deaths   , na.rm = TRUE),
+      all_new_tests          = mean(all_new_tests       , na.rm = TRUE),
+      sum_all_new_tests      = sum(sum_all_new_tests    , na.rm = TRUE),
 
       # per capita: take last value per captia in group (using not yet aggregated values)
       cap_cum_cases          = robust_ratio(all_cum_cases, pop),
