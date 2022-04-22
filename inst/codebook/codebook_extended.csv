@@ -13,29 +13,29 @@ other,new_tests_orig,Daily number of tests reported from source,Daily reported t
 other,cum_tests_orig,Cumulative number of tests reported from source,Cumulative reported tests,as it is,,
 other,all_cum_cases,Cumulative number of cases,Cumulative Cases,smoothed (7 day rolling average),last observation(all_cum_cases),sum(all_cum_cases)
 other,all_new_cases,Daily number of cases (7 day rolling average),Daily Cases,smoothed (7 day rolling average),"mean(all_new_cases), discarding incomplete periods",mean(all_new_cases)
-other,all_cum_deaths,Cumulative number of deaths,Cumulative Deaths,smoothed (7 day rolling average),TODO (like above),TODO (like above)
-other,all_new_deaths,Daily number of deaths (7 day rolling average),Daily Deaths,smoothed (7 day rolling average),TODO (like above),TODO (like above)
-other,all_cum_tests,Cumulative number of tests (smoothed),Cumulative Tests,smoothed (7 day rolling average),TODO (like above),TODO (like above)
-other,all_new_tests,Daily number of tests (7 day rolling average smoothed),Daily Tests,smoothed (7 day rolling average),TODO (like above),TODO (like above)
+other,all_cum_deaths,Cumulative number of deaths,Cumulative Deaths,smoothed (7 day rolling average),last observation(all_cum_deaths),sum(all_cum_deaths)
+other,all_new_deaths,Daily number of deaths (7 day rolling average),Daily Deaths,smoothed (7 day rolling average),"mean(all_new_deaths), discarding incomplete periods",mean(all_new_deaths)
+other,all_cum_tests,Cumulative number of tests (smoothed),Cumulative Tests,smoothed (7 day rolling average),last observation(all_cum_tests),sum(all_cum_tests)
+other,all_new_tests,Daily number of tests (7 day rolling average smoothed),Daily Tests,smoothed (7 day rolling average),"mean(all_new_tests), discarding incomplete periods",mean(all_new_tests)
 other,cap_cum_cases,Cumulative number of cases per 1000 people,Cumulative Cases/1000 people,all_cum_cases/pop,last observation(all_cum_cases/pop),"sum(all_cum_cases)/sum(pop), both values only"
 default,cap_new_cases,Daily number of cases per 1000 people (7 day rolling average),Cases/1000 people,all_new_cases/pop,"mean(all_new_cases/pop), discarding incomplete periods","sum(all_new_cases)/sum(pop), both values only"
-other,cap_cum_deaths,Cumulative number of deaths per 1000 people,Cumulative Deaths/1000 people,all_cum_deaths/pop,TODO (like above),TODO (like above)
-default,cap_new_deaths,Daily number of deaths per 1000 people (7 day rolling average),Deaths/1000 people,all_new_deaths/pop,TODO (like above),TODO (like above)
-other,cap_cum_tests,Cumulative number of tests per 1000 people (smoothed),Cumulative Tests/1000 people,all_cum_tests/pop,TODO (like above),TODO (like above)
-default,cap_new_tests,Daily number of tests per 1000 people (7 day rolling average smoothed),Tests/1000 people,all_new_tests/pop,TODO (like above),TODO (like above)
+other,cap_cum_deaths,Cumulative number of deaths per 1000 people,Cumulative Deaths/1000 people,all_cum_deaths/pop,last observation(all_cum_deaths/pop),"sum(all_cum_deaths)/sum(pop), both values only"
+default,cap_new_deaths,Daily number of deaths per 1000 people (7 day rolling average),Deaths/1000 people,all_new_deaths/pop,"mean(all_new_deaths/pop), discarding incomplete periods","sum(all_new_deaths)/sum(pop), both values only"
+other,cap_cum_tests,Cumulative number of tests per 1000 people (smoothed),Cumulative Tests/1000 people,all_cum_tests/pop,last observation(all_cum_tests/pop),"sum(all_cum_tests)/sum(pop), both values only"
+default,cap_new_tests,Daily number of tests per 1000 people (7 day rolling average smoothed),Tests/1000 people,all_new_tests/pop,"mean(all_new_tests/pop), discarding incomplete periods","sum(all_new_tests)/sum(pop), both values only"
 other,cap100k_cum_cases,Cumulative number of cases per 100K people,Cumulative Cases/100K people,all_cum_cases/pop_100k,last observation(all_cum_cases/pop_100k),"sum(all_cum_cases)/sum(pop100k), both values only"
 other,cap100k_new_cases,Daily number of cases per 100K people (7 day rolling average),Cases/100K people,all_new_cases/pop_100k,"mean(all_new_cases/pop_100k), discarding incomplete periods","sum(all_new_cases)/sum(pop100k), both values only"
-other,cap100k_cum_deaths,Cumulative number of deaths per 100K people,Cumulative Deaths/100K people,all_cum_deaths/pop_100k,TODO (like above),TODO (like above)
-other,cap100k_new_deaths,Daily number of deaths per 100K people (7 day rolling average),Deaths/100K people,all_new_deaths/pop_100k,TODO (like above),TODO (like above)
-other,cap100k_cum_tests,Cumulative number of tests per 100K people (smoothed),Cumulative Tests/100K people,all_cum_tests/pop_100k,TODO (like above),TODO (like above)
-other,cap100k_new_tests,Daily number of tests per 100K people (7 day rolling average smoothed),Tests/100K people,all_new_tests/pop_100k,TODO (like above),TODO (like above)
+other,cap100k_cum_deaths,Cumulative number of deaths per 100K people,Cumulative Deaths/100K people,all_cum_deaths/pop_100k,last observation(all_cum_deaths/pop_100k),"sum(all_cum_deaths)/sum(pop100k), both values only"
+other,cap100k_new_deaths,Daily number of deaths per 100K people (7 day rolling average),Deaths/100K people,all_new_deaths/pop_100k,"mean(all_new_deaths/pop_100k), discarding incomplete periods","sum(all_new_deaths)/sum(pop100k), both values only"
+other,cap100k_cum_tests,Cumulative number of tests per 100K people (smoothed),Cumulative Tests/100K people,all_cum_tests/pop_100k,"mean(all_new_tests/pop_100k), discarding incomplete periods","sum(all_new_tests)/sum(pop100k), both values only"
+other,cap100k_new_tests,Daily number of tests per 100K people (7 day rolling average smoothed),Tests/100K people,all_new_tests/pop_100k,"mean(all_new_tests/pop_100k), discarding incomplete periods","sum(all_new_tests)/sum(pop100k), both values only"
 default,pos,Positivity rate,Positivity rate (%),all_new_cases/all_new_tests,mean(all_new_cases)/mean(all_new_tests),"sum(all_new_cases)/sum(all_new_tests), both values only"
 other,sum_all_new_cases,Sum of daily number of cases,Sum Daily Cases,,"sum(all_new_cases), discarding incomplete periods",sum(sum_all_new_cases)
-other,sum_all_new_deaths,Sum of daily number of deaths (7 day rolling average),Sum Daily Deaths,,TODO (like above),sum(sum_all_new_deaths)
-other,sum_all_new_tests,Sum of daily number of tests (7 day rolling average smoothed),Sum daily Tests,,TODO (like above),TODO (like above)
+other,sum_all_new_deaths,Sum of daily number of deaths (7 day rolling average),Sum Daily Deaths,,"sum(all_new_deaths), discarding incomplete periods",sum(sum_all_new_deaths)
+other,sum_all_new_tests,Sum of daily number of tests (7 day rolling average smoothed),Sum daily Tests,,"sum(all_new_tests), discarding incomplete periods",sum(sum_all_new_tests)
 other,sum_cap_new_cases,Sum of daily number of cases per 1000 people,Sum Cases/1000 people,,"sum(all_new_cases/pop), discarding incomplete periods","sum(sum_all_new_cases)/sum(pop), both values only"
-other,sum_cap_new_deaths,Sum of daily number of deaths per 1000 people,Sum Deaths/1000 people,,TODO (like above),TODO (like above)
-other,sum_cap_new_tests,Sum daily number of tests per 1000 people,Sum Tests/1000 people,,TODO (like above),TODO (like above)
+other,sum_cap_new_deaths,Sum of daily number of deaths per 1000 people,Sum Deaths/1000 people,,"sum(all_new_deaths/pop), discarding incomplete periods","sum(sum_all_new_deaths)/sum(pop), both values only"
+other,sum_cap_new_tests,Sum daily number of tests per 1000 people,Sum Tests/1000 people,,"sum(all_new_tests/pop), discarding incomplete periods","sum(sum_all_new_tests)/sum(pop), both values only"
 other,sum_cap100k_new_cases,Sum of daily number of cases per 100K people,Sum Cases/100K people,,"sum(all_new_cases/pop_100k), discarding incomplete periods","sum(sum_all_new_cases)/sum(pop100k), both values only"
-other,sum_cap100k_new_deaths,Sum of daily number of deaths per 100K people,Sum Deaths/100K people,,TODO (like above),TODO (like above)
-other,sum_cap100k_new_tests,Sum daily number of tests per 100K people,Sum Tests/100K people,,TODO (like above),TODO (like above)
+other,sum_cap100k_new_deaths,Sum of daily number of deaths per 100K people,Sum Deaths/100K people,,"sum(all_new_deaths/pop_100k), discarding incomplete periods","sum(sum_all_new_deaths)/sum(pop100k), both values only"
+other,sum_cap100k_new_tests,Sum daily number of tests per 100K people,Sum Tests/100K people,,"sum(all_new_tests/pop_100k), discarding incomplete periods","sum(sum_all_new_tests)/sum(pop100k), both values only"
