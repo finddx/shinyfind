@@ -1,51 +1,41 @@
-col_type,variable,description,description_short,calculation
-other,unit,Unit,Unit,
-other,name,Name,Name,
-other,group,Group,Group,
-other,continent,Continent,Continent,
-other,who_region,WHO Region,WHO Region,
-other,income,Income Group,Income Group,
-other,pop_100k,Population in 100'000,Population in 100k people,
-other,pop,Population in 1000,Population in 1000 people,
-other,new_cases_orig,Daily number of cases reported from source,Daily reported cases,
-other,new_deaths_orig,Daily number of deaths reported from source,Daily reported deaths,
-other,new_tests_orig,Daily number of tests reported from source,Daily reported tests,
-other,cum_tests_orig,Cumulative number of tests reported from source,Cumulative reported tests,
-other,cap_cum_cases,Cumulative number of cases per 1000 people,Cumulative Cases/1000 people,all_cum_cases/pop
-default,cap_new_cases,Daily number of cases per 1000 people (7 day rolling average),Cases/1000 people,all_new_cases/pop
-other,cap_cum_deaths,Cumulative number of deaths per 1000 people,Cumulative Deaths/1000 people,all_cum_deaths/pop
-default,cap_new_deaths,Daily number of deaths per 1000 people (7 day rolling average),Deaths/1000 people,all_new_deaths/pop
-other,cap_cum_tests,Cumulative number of tests per 1000 people (smoothed),Cumulative Tests/1000 people,all_cum_tests/pop
-default,cap_new_tests,Daily number of tests per 1000 people (7 day rolling average smoothed),Tests/1000 people,all_new_tests/pop
-other,all_cum_cases,Cumulative number of cases,Cumulative Cases,
-other,all_new_cases,Daily number of cases (7 day rolling average),Daily Cases,
-other,all_cum_deaths,Cumulative number of deaths,Cumulative Deaths,
-other,all_new_deaths,Daily number of deaths (7 day rolling average),Daily Deaths,
-other,all_cum_tests,Cumulative number of tests (smoothed),Cumulative Tests,
-other,all_new_tests,Daily number of tests (7 day rolling average smoothed),Daily Tests,
-default,pos,Positivity rate,Positivity rate (%),all_new_cases/all_new_tests
-other,cap100k_cum_cases,Cumulative number of cases per 100K people,Cumulative Cases/100K people,all_cum_cases/pop_100k
-other,cap100k_new_cases,Daily number of cases per 100K people (7 day rolling average),Cases/100K people,all_new_cases/pop_100k
-other,cap100k_cum_deaths,Cumulative number of deaths per 100K people,Cumulative Deaths/100K people,all_cum_deaths/pop_100k
-other,cap100k_new_deaths,Daily number of deaths per 100K people (7 day rolling average),Deaths/100K people,all_new_deaths/pop_100k
-other,cap100k_cum_tests,Cumulative number of tests per 100K people (smoothed),Cumulative Tests/100K people,all_cum_tests/pop_100k
-other,cap100k_new_tests,Daily number of tests per 100K people (7 day rolling average smoothed),Tests/100K people,all_new_tests/pop_100k
-default,avg_cap_new_cases,Average daily number of cases per 1000 people,Average Cases/1000 people,mean(all_new_cases/pop)
-other,sum_cap_new_cases,Sum of daily number of cases per 1000 people,Sum Cases/1000 people,sum(all_new_cases/pop)
-default,avg_cap_new_deaths,Average daily number of deaths per 1000 people,Average Deaths/1000 people,mean(all_new_deaths/pop)
-other,sum_cap_new_deaths,Sum of daily number of deaths per 1000 people,Sum Deaths/1000 people,sum(all_new_deaths/pop)
-default,avg_cap_new_tests,Average daily number of tests per 1000 people,Average Tests/1000 people,mean(all_new_tests/pop)
-other,sum_cap_new_tests,Sum daily number of tests per 1000 people,Sum Tests/1000 people,sum(all_new_tests/pop)
-other,avg_all_new_cases,Average daily number of cases,Average Daily Cases,mean(all_new_cases)
-other,sum_all_new_cases,Sum of daily number of cases,Sum Daily Cases,sum(all_new_cases)
-other,avg_all_new_deaths,Average daily number of deaths (7 day rolling average),Average Daily Deaths,mean(all_new_deaths)
-other,sum_all_new_deaths,Sum of daily number of deaths (7 day rolling average),Sum Daily Deaths,sum(all_new_deaths)
-other,avg_all_new_tests,Average daily number of tests (7 day rolling average smoothed),Average daily Tests,mean(all_new_tests)
-other,sum_all_new_tests,Sum of daily number of tests (7 day rolling average smoothed),Sum daily Tests,sum(all_new_tests)
-default,avg_pos,Average Positivity rate,Average positivity rate (%),avg_all_new_cases/avg_all_new_tests
-other,avg_cap100k_new_cases,Average daily number of cases per 100K people,Average Cases/100K people,mean(all_new_cases/pop_100k)
-other,sum_cap100k_new_cases,Sum of daily number of cases per 100K people,Sum Cases/100K people,sum(all_new_cases/pop_100k
-other,avg_cap100k_new_deaths,Average daily number of deaths per 100K people,Average Deaths/100K people,mean(all_new_deaths/pop_100k)
-other,sum_cap100k_new_deaths,Sum of daily number of deaths per 100K people,Sum Deaths/100K people,sum(all_new_deaths/pop_100k)
-other,avg_cap100k_new_tests,Average daily number of tests per 100K people,Average Tests/100K people,mean(all_new_tests/pop_100k)
-other,sum_cap100k_new_tests,Sum daily number of tests per 100K people,Sum Tests/100K people,sum(all_new_tests/pop_100k)
+col_type,variable,description,description_short,single_day,summarize_over_time,summarize_over_group
+other,unit,Unit,Unit,,,
+other,name,Name,Name,,,
+other,group,Group,Group,,,
+other,continent,Continent,Continent,,,
+other,who_region,WHO Region,WHO Region,,,
+other,income,Income Group,Income Group,,,
+other,pop_100k,Population in 100'000,Population in 100k people,as it is,"mean(pop), discarding incomplete periods",sum(pop)
+other,pop,Population in 1000,Population in 1000 people,as it is,"mean(pop100k), discarding incomplete periods",sum(pop100k)
+other,new_cases_orig,Daily number of cases reported from source,Daily reported cases,as it is,,
+other,new_deaths_orig,Daily number of deaths reported from source,Daily reported deaths,as it is,,
+other,new_tests_orig,Daily number of tests reported from source,Daily reported tests,as it is,,
+other,cum_tests_orig,Cumulative number of tests reported from source,Cumulative reported tests,as it is,,
+other,all_cum_cases,Cumulative number of cases,Cumulative Cases,smoothed (7 day rolling average),last observation(all_cum_cases),sum(all_cum_cases)
+other,all_new_cases,Daily number of cases (7 day rolling average),Daily Cases,smoothed (7 day rolling average),"mean(all_new_cases), discarding incomplete periods",mean(all_new_cases)
+other,all_cum_deaths,Cumulative number of deaths,Cumulative Deaths,smoothed (7 day rolling average),last observation(all_cum_deaths),sum(all_cum_deaths)
+other,all_new_deaths,Daily number of deaths (7 day rolling average),Daily Deaths,smoothed (7 day rolling average),"mean(all_new_deaths), discarding incomplete periods",mean(all_new_deaths)
+other,all_cum_tests,Cumulative number of tests (smoothed),Cumulative Tests,smoothed (7 day rolling average),last observation(all_cum_tests),sum(all_cum_tests)
+other,all_new_tests,Daily number of tests (7 day rolling average smoothed),Daily Tests,smoothed (7 day rolling average),"mean(all_new_tests), discarding incomplete periods",mean(all_new_tests)
+other,cap_cum_cases,Cumulative number of cases per 1000 people,Cumulative Cases/1000 people,all_cum_cases/pop,last observation(all_cum_cases/pop),"sum(all_cum_cases)/sum(pop), both values only"
+default,cap_new_cases,Daily number of cases per 1000 people (7 day rolling average),Cases/1000 people,all_new_cases/pop,"mean(all_new_cases/pop), discarding incomplete periods","sum(all_new_cases)/sum(pop), both values only"
+other,cap_cum_deaths,Cumulative number of deaths per 1000 people,Cumulative Deaths/1000 people,all_cum_deaths/pop,last observation(all_cum_deaths/pop),"sum(all_cum_deaths)/sum(pop), both values only"
+default,cap_new_deaths,Daily number of deaths per 1000 people (7 day rolling average),Deaths/1000 people,all_new_deaths/pop,"mean(all_new_deaths/pop), discarding incomplete periods","sum(all_new_deaths)/sum(pop), both values only"
+other,cap_cum_tests,Cumulative number of tests per 1000 people (smoothed),Cumulative Tests/1000 people,all_cum_tests/pop,last observation(all_cum_tests/pop),"sum(all_cum_tests)/sum(pop), both values only"
+default,cap_new_tests,Daily number of tests per 1000 people (7 day rolling average smoothed),Tests/1000 people,all_new_tests/pop,"mean(all_new_tests/pop), discarding incomplete periods","sum(all_new_tests)/sum(pop), both values only"
+other,cap100k_cum_cases,Cumulative number of cases per 100K people,Cumulative Cases/100K people,all_cum_cases/pop_100k,last observation(all_cum_cases/pop_100k),"sum(all_cum_cases)/sum(pop100k), both values only"
+other,cap100k_new_cases,Daily number of cases per 100K people (7 day rolling average),Cases/100K people,all_new_cases/pop_100k,"mean(all_new_cases/pop_100k), discarding incomplete periods","sum(all_new_cases)/sum(pop100k), both values only"
+other,cap100k_cum_deaths,Cumulative number of deaths per 100K people,Cumulative Deaths/100K people,all_cum_deaths/pop_100k,last observation(all_cum_deaths/pop_100k),"sum(all_cum_deaths)/sum(pop100k), both values only"
+other,cap100k_new_deaths,Daily number of deaths per 100K people (7 day rolling average),Deaths/100K people,all_new_deaths/pop_100k,"mean(all_new_deaths/pop_100k), discarding incomplete periods","sum(all_new_deaths)/sum(pop100k), both values only"
+other,cap100k_cum_tests,Cumulative number of tests per 100K people (smoothed),Cumulative Tests/100K people,all_cum_tests/pop_100k,"mean(all_new_tests/pop_100k), discarding incomplete periods","sum(all_new_tests)/sum(pop100k), both values only"
+other,cap100k_new_tests,Daily number of tests per 100K people (7 day rolling average smoothed),Tests/100K people,all_new_tests/pop_100k,"mean(all_new_tests/pop_100k), discarding incomplete periods","sum(all_new_tests)/sum(pop100k), both values only"
+default,pos,Positivity rate,Positivity rate (%),all_new_cases/all_new_tests,mean(all_new_cases)/mean(all_new_tests),"sum(all_new_cases)/sum(all_new_tests), both values only"
+other,sum_all_new_cases,Sum of daily number of cases,Sum Daily Cases,,"sum(all_new_cases), discarding incomplete periods",sum(sum_all_new_cases)
+other,sum_all_new_deaths,Sum of daily number of deaths (7 day rolling average),Sum Daily Deaths,,"sum(all_new_deaths), discarding incomplete periods",sum(sum_all_new_deaths)
+other,sum_all_new_tests,Sum of daily number of tests (7 day rolling average smoothed),Sum daily Tests,,"sum(all_new_tests), discarding incomplete periods",sum(sum_all_new_tests)
+other,sum_cap_new_cases,Sum of daily number of cases per 1000 people,Sum Cases/1000 people,,"sum(all_new_cases/pop), discarding incomplete periods","sum(sum_all_new_cases)/sum(pop), both values only"
+other,sum_cap_new_deaths,Sum of daily number of deaths per 1000 people,Sum Deaths/1000 people,,"sum(all_new_deaths/pop), discarding incomplete periods","sum(sum_all_new_deaths)/sum(pop), both values only"
+other,sum_cap_new_tests,Sum daily number of tests per 1000 people,Sum Tests/1000 people,,"sum(all_new_tests/pop), discarding incomplete periods","sum(sum_all_new_tests)/sum(pop), both values only"
+other,sum_cap100k_new_cases,Sum of daily number of cases per 100K people,Sum Cases/100K people,,"sum(all_new_cases/pop_100k), discarding incomplete periods","sum(sum_all_new_cases)/sum(pop100k), both values only"
+other,sum_cap100k_new_deaths,Sum of daily number of deaths per 100K people,Sum Deaths/100K people,,"sum(all_new_deaths/pop_100k), discarding incomplete periods","sum(sum_all_new_deaths)/sum(pop100k), both values only"
+other,sum_cap100k_new_tests,Sum daily number of tests per 100K people,Sum Tests/100K people,,"sum(all_new_tests/pop_100k), discarding incomplete periods","sum(sum_all_new_tests)/sum(pop100k), both values only"
