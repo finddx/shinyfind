@@ -72,11 +72,10 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
 
-  # check if newer data is available in FINDCov19TrackerData
-  data_all <- check_for_update("data_all",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1",
-    col_spec = list(
+  # read data_all
+  data_all <- readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
+    col_types = list(
       .default = col_double(),
       set = col_character(),
       name = col_character(),
@@ -86,9 +85,8 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   )
 
 
-  unit_info = check_for_update("unit_info",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Funit_info.csv&page=1&per_page=1"
+  unit_info = readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
   )
 
 
