@@ -5,27 +5,6 @@
 #' @name get_data_all
 get_data_all_ <- function(time = today_at_sunrise()) {
 
-  check_for_update <- function(object, download_url, heartbeat_url, col_spec = readr::cols()) {
-
-    if (exists(object)) {
-
-      heartbeat_upstream <- curl::curl_fetch_memory(heartbeat_url)$modified
-
-      if (isTRUE(heartbeat_upstream == heartbeat_local)) {
-        message(sprintf("'%s.csv': data already up-to-date, skipping download.", object))
-        return(get(object, envir = globalenv()))
-      } else {
-        object <- readr::read_csv(download_url, col_types = col_spec)
-        heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
-        return(object)
-      }
-    } else {
-      object <- readr::read_csv(download_url, col_types = col_spec)
-      heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
-      return(object)
-    }
-  }
-
 
   codebook <- get_codebook_extended()
 
@@ -88,21 +67,6 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   unit_info = readr::read_csv(
     "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
   )
-
-
-
-
-
-
-
-
-  # data_all <- readr::read_csv("/Users/Anna/FIND_Onedrive/OneDrive - Foundation for Innovative New Diagnostics FIND/BB_Projects/Shinyapps_projects/FINDCov19TrackerData/processed/data_all.csv",
-  #                             col_types = readr::cols()
-  # )
-  #
-  # unit_info <- readr::read_csv("/Users/Anna/FIND_Onedrive/OneDrive - Foundation for Innovative New Diagnostics FIND/BB_Projects/Shinyapps_projects/FINDCov19TrackerData/processed/unit_info.csv",
-  #                             col_types = readr::cols()
-  # )
 
   shiny_data_wide <-
    data_all %>%
