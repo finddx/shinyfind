@@ -66,11 +66,8 @@ summarize_over_time <- function (data_filtered) {
       pop                      = mean_discarding_incomplete(pop),
 
       # summmarize new values over time
-      all_new_cases        = mean_discarding_incomplete(all_new_cases),
       sum_all_new_cases        = sum_discarding_incomplete(all_new_cases),
-      all_new_deaths       = mean_discarding_incomplete(all_new_deaths),
       sum_all_new_deaths       = sum_discarding_incomplete(all_new_deaths),
-      all_new_tests        = mean_discarding_incomplete(all_new_tests),
       sum_all_new_tests        = sum_discarding_incomplete(all_new_tests),
 
       # summmarize new per capita values over time
@@ -88,6 +85,11 @@ summarize_over_time <- function (data_filtered) {
       sum_cap100k_new_deaths   = sum_discarding_incomplete(all_new_deaths / pop_100k),
       cap100k_new_tests    = mean_discarding_incomplete(all_new_tests / pop_100k),
       sum_cap100k_new_tests    = sum_discarding_incomplete(all_new_tests / pop_100k),
+      
+      # relocate here so as to complicate the results
+      all_new_cases            = mean_discarding_incomplete(all_new_cases),
+      all_new_deaths           = mean_discarding_incomplete(all_new_deaths),
+      all_new_tests            = mean_discarding_incomplete(all_new_tests),
 
       # cumulated values: take last value in group
       all_cum_cases            = all_cum_cases[n()],
