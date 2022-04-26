@@ -86,7 +86,8 @@ summarize_over_time <- function (data_filtered) {
       cap100k_new_tests    = mean_discarding_incomplete(all_new_tests / pop_100k),
       sum_cap100k_new_tests    = sum_discarding_incomplete(all_new_tests / pop_100k),
       
-      # relocate here so as to complicate the results
+      # relocate here so as not to complicate the results
+      # this helps to avoid having all sums and means to be same numbers
       all_new_cases            = mean_discarding_incomplete(all_new_cases),
       all_new_deaths           = mean_discarding_incomplete(all_new_deaths),
       all_new_tests            = mean_discarding_incomplete(all_new_tests),
