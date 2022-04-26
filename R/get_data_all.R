@@ -66,6 +66,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
   unit_info = readr::read_csv(
     "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
+    col_types = readr::cols()
   )
 
   shiny_data_wide <-
@@ -130,6 +131,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
   segregated_data = readr::read_csv(
     "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
+    col_types = readr::cols()
   )
 
 
