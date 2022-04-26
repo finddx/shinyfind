@@ -126,15 +126,10 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   country_name <- country_info  %>%
     left_join(select(country_name, country), by = c("alpha3" = "country")) %>%
     rename(country = alpha3)
-  
-  # segregated_tests = check_for_update("unit_info",
-  #   download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/automated/segregated_tests.csv",
-  #   heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_tests.csv&page=1&per_page=1"
-  # )
 
-  segregated_data = check_for_update("segregated_data",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_data.csv&page=1&per_page=1"
+
+  segregated_data = readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
   )
 
 
@@ -212,10 +207,6 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
   slider_date <- max(filter(shiny_data, var == "tests" & !is.na(value))$time)
-
-
-  # set font in echart equal to rest
-  # e_common(font_family = "roboto,sans-serif", theme = "westeros")
 
 
   last_data_update <- curl::curl_fetch_memory("https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1")$modified
