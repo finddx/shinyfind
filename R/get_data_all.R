@@ -5,27 +5,6 @@
 #' @name get_data_all
 get_data_all_ <- function(time = today_at_sunrise()) {
 
-  check_for_update <- function(object, download_url, heartbeat_url, col_spec = readr::cols()) {
-
-    if (exists(object)) {
-
-      heartbeat_upstream <- curl::curl_fetch_memory(heartbeat_url)$modified
-
-      if (isTRUE(heartbeat_upstream == heartbeat_local)) {
-        message(sprintf("'%s.csv': data already up-to-date, skipping download.", object))
-        return(get(object, envir = globalenv()))
-      } else {
-        object <- readr::read_csv(download_url, col_types = col_spec)
-        heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
-        return(object)
-      }
-    } else {
-      object <- readr::read_csv(download_url, col_types = col_spec)
-      heartbeat_local <<- curl::curl_fetch_memory(heartbeat_url)$modified
-      return(object)
-    }
-  }
-
 
   codebook <- get_codebook_extended()
 
@@ -72,11 +51,10 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
 
-  # check if newer data is available in FINDCov19TrackerData
-  data_all <- check_for_update("data_all",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1",
-    col_spec = list(
+  # read data_all
+  data_all <- readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
+    col_types = list(
       .default = col_double(),
       set = col_character(),
       name = col_character(),
@@ -86,25 +64,10 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   )
 
 
-  unit_info = check_for_update("unit_info",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Funit_info.csv&page=1&per_page=1"
+  unit_info = readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
+    col_types = readr::cols()
   )
-
-
-
-
-
-
-
-
-  # data_all <- readr::read_csv("/Users/Anna/FIND_Onedrive/OneDrive - Foundation for Innovative New Diagnostics FIND/BB_Projects/Shinyapps_projects/FINDCov19TrackerData/processed/data_all.csv",
-  #                             col_types = readr::cols()
-  # )
-  #
-  # unit_info <- readr::read_csv("/Users/Anna/FIND_Onedrive/OneDrive - Foundation for Innovative New Diagnostics FIND/BB_Projects/Shinyapps_projects/FINDCov19TrackerData/processed/unit_info.csv",
-  #                             col_types = readr::cols()
-  # )
 
   shiny_data_wide <-
    data_all %>%
@@ -164,15 +127,11 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   country_name <- country_info  %>%
     left_join(select(country_name, country), by = c("alpha3" = "country")) %>%
     rename(country = alpha3)
-  
-  # segregated_tests = check_for_update("unit_info",
-  #   download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/automated/segregated_tests.csv",
-  #   heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_tests.csv&page=1&per_page=1"
-  # )
 
-  segregated_data = check_for_update("segregated_data",
-    download_url = "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
-    heartbeat_url = "https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fsegregated_data.csv&page=1&per_page=1"
+
+  segregated_data = readr::read_csv(
+    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/segregated-data.csv",
+    col_types = readr::cols()
   )
 
 
@@ -250,10 +209,6 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
   slider_date <- max(filter(shiny_data, var == "tests" & !is.na(value))$time)
-
-
-  # set font in echart equal to rest
-  # e_common(font_family = "roboto,sans-serif", theme = "westeros")
 
 
   last_data_update <- curl::curl_fetch_memory("https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1")$modified

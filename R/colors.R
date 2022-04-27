@@ -46,3 +46,19 @@ pal_find_regions <- function() {
   find_regions
 }
 
+
+# from https://public.flourish.studio/story/1069343/?full
+# gg_color_swatches(5) +
+#   scale_fill_manual(values = pal_find_variants())
+#' @export
+pal_find_variants <- function() {
+  find_variants <- c(
+    "#7b97a0",  # impact to be determined
+    "#5b254e",  # no expected impact (based on target genes)
+    "#6dc3c8",  # no expected impact (in silico analysis)
+    "#01a2ab",  # no impact
+    "#f19576",  # potential impact
+    "#e85239"   # confirmed impact
+  )
+  find_variants
+}
