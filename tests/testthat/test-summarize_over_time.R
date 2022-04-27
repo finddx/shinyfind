@@ -4,14 +4,15 @@ data_all <- .$data_all
 country_last_update_info <- .$country_last_update_info
 
 colnames_expected <- c(
-  "unit", "country", "name", "pop_100k", "pop", "all_new_cases", "sum_all_new_cases",
-  "all_new_deaths", "sum_all_new_deaths", "all_new_tests", "sum_all_new_tests",
-  "cap_new_cases", "sum_cap_new_cases", "cap_new_deaths", "sum_cap_new_deaths",
-  "cap_new_tests", "sum_cap_new_tests", "cap100k_new_cases", "sum_cap100k_new_cases",
-  "cap100k_new_deaths", "sum_cap100k_new_deaths", "cap100k_new_tests", "sum_cap100k_new_tests",
-  "all_cum_cases", "all_cum_deaths", "all_cum_tests", "cap_cum_cases", "cap_cum_deaths",
-  "cap_cum_tests", "cap100k_cum_cases", "cap100k_cum_deaths", "cap100k_cum_tests", "pos",
-  "continent", "income", "who_region", "world"
+  "unit", "country", "name", "pop_100k", "pop", "sum_all_new_cases",
+  "sum_all_new_deaths", "sum_all_new_tests", "cap_new_cases", "sum_cap_new_cases", 
+  "cap_new_deaths", "sum_cap_new_deaths", "cap_new_tests", "sum_cap_new_tests", 
+  "cap100k_new_cases", "sum_cap100k_new_cases", "cap100k_new_deaths", 
+  "sum_cap100k_new_deaths", "cap100k_new_tests", "sum_cap100k_new_tests",
+  "all_new_cases", "all_new_deaths", "all_new_tests", "all_cum_cases", "all_cum_deaths",
+  "all_cum_tests", "cap_cum_cases", "cap_cum_deaths", "cap_cum_tests", "cap100k_cum_cases", 
+  "cap100k_cum_deaths", "cap100k_cum_tests", "pos", "continent", "income", 
+  "who_region", "world"
 )
 
 test_that("Summarize of period for one day gives same result as already in data", {
