@@ -10,7 +10,7 @@ download_data_raw_ui <- function(id = "data_raw") {
         h3("Download Raw Data"),
         tags$span(style = "display:flex;", p(
           "All data is available on our ",
-          a(href = "https://github.com/finddx/data/tree/master/processed", target = "_blank", " GitHub Repository."),
+          a(href = "https://github.com/finddx/FINDCov19TrackerData/tree/master/processed", target = "_blank", " GitHub Repository."),
           " A ",
           a(href = "https://github.com/finddx/FINDCov19TrackerData/blob/master/processed/codebook.csv", target = "_blank", " Variable codebook"),
           "is also available. "
