@@ -57,12 +57,12 @@ pal_find_regions <- function() {
 #' @export
 pal_find_variants <- function() {
   find_variants <- c(
-    "#7b97a0",  # impact to be determined
-    "#5b254e",  # no expected impact (based on target genes)
-    "#6dc3c8",  # no expected impact (in silico analysis)
-    "#01a2ab",  # no impact
-    "#f19576",  # potential impact
-    "#e85239"   # confirmed impact
+    "#7B97A0",  # unknown
+    "#6DC3C8",  # no expected impact (in silico analyses)
+    "#01A2AB ", # no impact  (analytical/clinical studies conducted)
+    "#F19576",  # potential impact (in silico analyses)
+    "#E85239",  # analytical/clinical studies
+    "#adbac0 "  # not applicable
   )
   find_variants
 }
