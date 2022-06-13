@@ -59,10 +59,10 @@ pal_find_variants <- function() {
   find_variants <- c(
     "#7B97A0",  # unknown
     "#6DC3C8",  # no expected impact (in silico analyses)
-    "#01A2AB ", # no impact  (analytical/clinical studies conducted)
+    "#01A2AB", # no impact  (analytical/clinical studies conducted)
     "#F19576",  # potential impact (in silico analyses)
     "#E85239",  # impact (analytical/clinical studies)
-    "#adbac0 "  # not applicable
+    "#adbac0"  # not applicable
   )
   find_variants
 }
