@@ -25,7 +25,11 @@ pal_find <- function(n = 14) {
     "#8f637b",
     "#6dc3c8",
     "#adbac0",
-    "#f08d80"
+    "#f08d80",
+    # others
+    "#01A2AB",
+    "#F19576",
+    "#E85239"
   )
   find_colors[1:n]
 }
