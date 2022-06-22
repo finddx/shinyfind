@@ -18,7 +18,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
    NA,  "cum", "deaths", "cap", "tinytiny",            p("The time series chart below shows the", strong("cumulative number"), "of", strong("deaths per 1000 people.")),
    NA,  "cum",  "tests", "all", "huge",              p("The time series chart below shows the", strong("cumulative number"), "of", strong("all tests"), " in each country."),
    NA,  "cum",  "tests", "cap", "medium",             p("The time series chart below shows the", strong("cumulative number"), "of", strong("tests per 1000 people.")),
-   NA,  "new",  "cases", "all", "tiny",            p("The time series chart below shows the", strong("daily number"), "of", strong("cases.")," Due to data inconsistencies, we show a moving 7-day average."),
+   NA,  "new",  "cases", "all", "tinytiny",            p("The time series chart below shows the", strong("daily number"), "of", strong("cases.")," Due to data inconsistencies, we show a moving 7-day average."),
    NA,  "new",  "cases", "cap", "tiny",             p("The time series chart below shows the", strong("daily number"), "of", strong("cases per 1000 people."), " Due to data inconsistencies, we show a moving 7-day average."),
    NA,  "new", "deaths", "all", "tiny",             p("The time series chart below shows the", strong("daily number"), "of", strong("deaths."), " Due to data inconsistencies, we show a moving 7-day average."),
    NA,  "new", "deaths", "cap", "tinytinytiny",              p("The time series chart below shows the", strong("daily number"), "of", strong("deaths per 1000 people.")," Due to data inconsistencies, we show a moving 7-day average."),
