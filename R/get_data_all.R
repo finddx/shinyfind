@@ -181,7 +181,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
   lst(
     # shiny_data,
-    data_all,
+    #data_all,
     country_info,
     country_info_matrix,
     country_last_update_info,
