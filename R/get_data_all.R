@@ -50,20 +50,6 @@ get_data_all_ <- function(time = today_at_sunrise()) {
 
 
 
-
-  # read data_all
-  data_all <- readr::read_csv(
-    "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/data_all.csv",
-    col_types = list(
-      .default = col_double(),
-      set = col_character(),
-      name = col_character(),
-      unit = col_character(),
-      time = col_date(format = "")
-    )
-  )
-
-
   unit_info = readr::read_csv(
     "https://raw.githubusercontent.com/finddx/FINDCov19TrackerData/master/processed/unit_info.csv",
     col_types = readr::cols()
