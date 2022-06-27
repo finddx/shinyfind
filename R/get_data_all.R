@@ -55,26 +55,6 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     col_types = readr::cols()
   )
 
-  shiny_data_wide <-
-   data_all %>%
-    select(
-      set, unit, time, cap_cum_cases, cap_new_cases, cap_cum_deaths,
-      cap_new_deaths, cap_cum_tests, cap_new_tests, all_cum_cases,
-      all_new_cases, all_cum_deaths, all_new_deaths, all_cum_tests,
-      all_new_tests, pos
-    ) %>%
-    # https://github.com/finddx/FINDCov19TrackerShiny/issues/36
-    mutate(pos = if_else(pos > 1, NA_real_, pos)) %>%
-    # quadrupple pos series, to have all combinations
-    mutate(pos = 100 * pos) %>%
-    mutate(cap_cum_pos = pos, all_cum_pos = pos, cap_new_pos = pos, all_new_pos = pos) %>%
-    select(-pos)
-
-  shiny_data <-
-    shiny_data_wide |>
-    pivot_longer(-c(set, unit, time), names_to = c("ref", "diff", "var"), names_sep = "_") %>%
-    filter(value >= 0)
-
   country_name <-
     countrycode::codelist %>%
     as_tibble() %>%
