@@ -174,13 +174,13 @@ get_data_all_ <- function(time = today_at_sunrise()) {
   #   distinct()
 
 
-  slider_date <- max(filter(shiny_data, var == "tests" & !is.na(value))$time)
+  #slider_date <- max(filter(shiny_data, var == "tests" & !is.na(value))$time)
 
 
   last_data_update <- curl::curl_fetch_memory("https://api.github.com/repos/finddx/FINDCov19TrackerData/commits?path=processed%2Fdata_all.csv&page=1&per_page=1")$modified
 
   lst(
-    shiny_data,
+    # shiny_data,
     data_all,
     country_info,
     country_info_matrix,
@@ -189,7 +189,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     pcr_rapid,
     unit_info_exp,
     #map_names,
-    slider_date,
+    #slider_date,
     segregated_tests_clean,
     last_data_update
   )
