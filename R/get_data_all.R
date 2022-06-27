@@ -168,10 +168,10 @@ get_data_all_ <- function(time = today_at_sunrise()) {
               by = c("jhu_ID" = "country")) |>
     select(-jhu_ID)
 
-  map_names <-
-    select(data_all, name, unit) %>%
-    filter(!is.na(name)) %>%
-    distinct()
+  # map_names <-
+  #   select(data_all, name, unit) %>%
+  #   filter(!is.na(name)) %>%
+  #   distinct()
 
 
   slider_date <- max(filter(shiny_data, var == "tests" & !is.na(value))$time)
@@ -188,7 +188,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     outcome_info,
     pcr_rapid,
     unit_info_exp,
-    map_names,
+    #map_names,
     slider_date,
     segregated_tests_clean,
     last_data_update
