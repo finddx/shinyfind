@@ -45,7 +45,9 @@ pal_find_regions <- function() {
     "#8c9eab",  # europe
     "#5e2e58",  # north america
     "#43abb6",  # oceania
-    "#ffab00"   # africa
+    "#ffab00",   # africa
+    "#9c2e4e", # south america
+    
   )
   find_regions
 }
