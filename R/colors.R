@@ -39,7 +39,8 @@ pal_find <- function(n = 14) {
 # gg_color_swatches(5) +
 #   scale_fill_manual(values = pal_find_regions())
 #' @export
-pal_find_regions <- function() {
+pal_find_regions <- function(n = 6) {
+  stopifnot(n <= 6)
   find_regions <- c(
     "#e3374b",  # asia
     "#8c9eab",  # europe
@@ -49,7 +50,7 @@ pal_find_regions <- function() {
     "#9c2e4e" # south america
     
   )
-  find_regions
+  find_regions[1:n]
 }
 
 
@@ -57,7 +58,8 @@ pal_find_regions <- function() {
 # gg_color_swatches(5) +
 #   scale_fill_manual(values = pal_find_variants())
 #' @export
-pal_find_variants <- function() {
+pal_find_variants <- function(n = 6) {
+  stopifnot(n <= 6)
   find_variants <- c(
     "#7B97A0",  # unknown
     "#6DC3C8",  # no expected impact (in silico analyses)
@@ -66,5 +68,5 @@ pal_find_variants <- function() {
     "#E85239",  # impact (analytical/clinical studies)
     "#adbac0"  # not applicable
   )
-  find_variants
+  find_variants[1:n]
 }
