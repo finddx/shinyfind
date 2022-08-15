@@ -3,5 +3,6 @@
 #' @export
 get_last_data_update <- function(endpoint) {
   last_data_update <- curl::curl_fetch_memory(endpoint)$modified
+  format(last_data_update, format= "%d %B %Y")
 }
 
