@@ -1,3 +1,6 @@
+# Function for plotting pie charts in test directory shiny apps with a uniform
+# style
+#' @export
 plot_pie <- function(data, id, subtitle = "Source: https://www.finddx.org/test-directory", ...) {
   
   validate(need(nrow(data) > 0, "No data to show. Please choose different filters"))
