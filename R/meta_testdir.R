@@ -8,9 +8,9 @@ meta_cols <- function(data) {
 # Function that returns a vector of columns that can be filtered 
 # via the pickergroup
 #' @export
-meta_cols_filtered <- function() {
+meta_cols_filtered <- function(data) {
   filtered_cols <-
-    meta_cols() |>
+    meta_cols(data) |>
     filter(filterable == TRUE)
   
   filtered_cols
@@ -18,9 +18,9 @@ meta_cols_filtered <- function() {
 
 # Function that maps a column id to its full description
 #' @export
-map_id <- function(id) {
+map_id <- function(id, data) {
   desc <- 
-    meta_cols() |>
+    meta_cols(data) |>
     filter(id == !! id) |>
     pull(description)
   
