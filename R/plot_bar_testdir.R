@@ -3,6 +3,7 @@
 #' @export
 plot_bar <- function(data, 
                      id, 
+                     meta_data = NULL,
                      left = "130px", 
                      nameGap = 100, 
                      subtitle = "Source: https://www.finddx.org/test-directory/",
@@ -22,7 +23,7 @@ plot_bar <- function(data,
     e_legend(show = FALSE) |>
     e_tooltip(trigger = "axis") |>
     e_y_axis(
-      name = map_id(id),
+      name = map_id(id, meta_data),
       nameGap = nameGap,
       nameLocation = "middle",
       axisLabel = list(

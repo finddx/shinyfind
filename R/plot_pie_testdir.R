@@ -1,7 +1,11 @@
 # Function for plotting pie charts in test directory shiny apps with a uniform
 # style
 #' @export
-plot_pie <- function(data, id, subtitle = "Source: https://www.finddx.org/test-directory", ...) {
+plot_pie <- function(data,
+                     id,
+                     meta_data = NULL,
+                     subtitle = "Source: https://www.finddx.org/test-directory",
+                     ...) {
   
   validate(need(nrow(data) > 0, "No data to show. Please choose different filters"))
   
@@ -38,7 +42,7 @@ plot_pie <- function(data, id, subtitle = "Source: https://www.finddx.org/test-d
     ) |>
     e_add_nested("itemStyle", color) |>
     e_title(
-      text = map_id(id),
+      text = map_id(id, meta_data),
       subtitle = "Number of tests"
     ) |>
     add_logo(bottom = 0, subtitle = subtitle, height = 20)
