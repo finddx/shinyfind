@@ -42,12 +42,12 @@ pal_find <- function(n = 14) {
 pal_find_regions <- function(n = 6) {
   stopifnot(n <= 6)
   find_regions <- c(
-    "#e3374b",  # asia
-    "#8c9eab",  # europe
-    "#5e2e58",  # north america
-    "#43abb6",  # oceania
-    "#ffab00",   # africa
-    "#9c2e4e" # south america
+    "#ffab00", # africa
+    "#e3374b", # asia
+    "#8c9eab", # europe
+    "#5e2e58", # north america
+    "#43abb6", # oceania
+    "#9c2e4e"  # south america
     
   )
   find_regions[1:n]
