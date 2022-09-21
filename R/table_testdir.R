@@ -28,7 +28,7 @@ table_tests <- function(session, data, meta_name) {
                     list(className = 'dt-center', targets ="_all",
                          render = JS(
                            "function(data, type, row, meta) {",
-                           "return data === null ? 'NA' : data;",
+                           "return data === null ? '-' : data;",
                            "}"))
                   )), escape = FALSE) |>
     DT::formatStyle(
