@@ -27,7 +27,7 @@ table_tests <- function(session, data, meta_name) {
                   columnDefs = list(
                     list(className = 'dt-center', targets ="_all")
                   )), escape = FALSE) |>
-    formatStyle(
+    DT::formatStyle(
       columns = unlist(col_desc),
       color = "black",
       fontFamily = "Roboto, sans-serif",
