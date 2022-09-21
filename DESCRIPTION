@@ -22,7 +22,8 @@ Imports:
     tidyr,
     tibble,
     curl,
-    readr
+    readr,
+    DT
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
