@@ -70,3 +70,11 @@ pal_find_variants <- function(n = 6) {
   )
   find_variants[1:n]
 }
+
+
+#' @export
+pal_find_green_first <- function() {
+  c(shinyfind::pal_find()[2], shinyfind::pal_find()[1], shinyfind::pal_find()[4], shinyfind::pal_find()[-c(1,2,4)])
+}
+
+
