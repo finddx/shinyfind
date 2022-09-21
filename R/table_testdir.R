@@ -3,6 +3,7 @@
 #' @examples
 #'
 #' table_tests(session, data, meta_name)
+#' @export
 table_tests <- function(session, data, meta_name) {
   #meta_name <- 'testdir_meta_cols_proof'
   x <- meta_cols(meta_name)
