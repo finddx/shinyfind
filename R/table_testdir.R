@@ -25,7 +25,11 @@ table_tests <- function(session, data, meta_name) {
                   language = list(searchPlaceholder = "Search test data..."),
                   pageLength = 10, 
                   columnDefs = list(
-                    list(className = 'dt-center', targets ="_all")
+                    list(className = 'dt-center', targets ="_all",
+                         render = JS(
+                           "function(data, type, row, meta) {",
+                           "return data === null ? 'NA' : data;",
+                           "}"))
                   )), escape = FALSE) |>
     DT::formatStyle(
       columns = unlist(col_desc),
