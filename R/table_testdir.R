@@ -19,7 +19,6 @@ table_tests <- function(session, data, meta_name) {
                     "function(settings, json) {",
                     "$(this.api().table().header()).css({'font-family':'Roboto, sans-serif', 'font-size':'13px'});",
                     "$('.dataTables_filter input[type=search]').css({'width': '100%', 'display': 'inline-block', 'position':'absolute'});",
-                    "$('.dataTables_filter').find('label').contents().eq(0).replaceWith('');",
                     "}"),
                   dom = 'Bfrtip',
                   language = list(searchPlaceholder = "Search test data..."),
