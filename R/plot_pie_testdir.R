@@ -4,6 +4,7 @@
 plot_pie <- function(data,
                      id,
                      meta_data = NULL,
+                     app = NULL,
                      subtitle = "Source: https://www.finddx.org/test-directory",
                      ...) {
   
@@ -42,7 +43,7 @@ plot_pie <- function(data,
     ) |>
     e_add_nested("itemStyle", color) |>
     e_title(
-      text = map_id(id, meta_data),
+      text = map_id(id, meta_data, app),
       subtitle = "Number of tests"
     ) |>
     add_logo(bottom = 0, subtitle = subtitle, height = 20)

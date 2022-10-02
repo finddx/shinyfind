@@ -4,6 +4,7 @@
 plot_bar <- function(data, 
                      id, 
                      meta_data = NULL,
+                     app = NULL,
                      left = "130px", 
                      nameGap = 100, 
                      subtitle = "Source: https://www.finddx.org/test-directory/",
@@ -43,6 +44,6 @@ plot_bar <- function(data,
     add_logo(bottom = 0, subtitle = subtitle, height = 20) |>
     e_theme_custom(as.character(jsonlite::toJSON(list(color = pal_find_green_first())))) |>
     e_title(
-      text = map_id(id, meta_data)
+      text = map_id(id, meta_data, app)
     )
 }
