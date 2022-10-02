@@ -24,7 +24,7 @@ plot_bar <- function(data,
     e_legend(show = FALSE) |>
     e_tooltip(trigger = "axis") |>
     e_y_axis(
-      name = map_id(id, meta_data),
+      name = map_id(id, meta_data, app),
       nameGap = nameGap,
       nameLocation = "middle",
       axisLabel = list(
