@@ -8,7 +8,7 @@ table_tests <- function(session, data, meta_name, app = 'covid19') {
   #meta_name <- 'testdir_meta_cols_proof'
   #x <- meta_cols(meta_name)
   
-  col_desc <- unlist(purrr::pmap(list(names(data), meta_name, app) map_id))
+  col_desc <- unlist(purrr::pmap(list(names(data), meta_name, app), map_id))
   col_names <- setNames(names(data), col_desc)
   #action <- DT::dataTableAjax(session, data)
   DT::datatable(data,
