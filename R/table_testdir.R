@@ -20,6 +20,7 @@ table_tests <- function(session, data, meta_name, app = 'covid19') {
                     "$('.dataTables_filter input[type=search]').css({'width': '100%', 'position':'absolute'});",
                     "}"),
                   dom = 'Bfrtip',
+                  scrollX = TRUE,
                   language = list(searchPlaceholder = "Search test data..."),
                   pageLength = 10, 
                   columnDefs = list(
