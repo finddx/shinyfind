@@ -16,9 +16,11 @@ table_tests <- function(session, data, meta_name, app = 'covid19') {
                   initComplete = JS(
                     "function(settings, json) {",
                     "$(this.api().table().header()).css({'font-family':'Roboto, sans-serif', 'font-size':'13px'});",
-                    "$('.dataTables_filter input[type=search]').css({'width': '100%', 'display': 'inline-block', 'position':'absolute'});",
+                    "$('.dataTables_filter').css({'float': 'left'});",
+                    "$('.dataTables_filter input[type=search]').css({'width': '100%', 'position':'absolute'});",
                     "}"),
                   dom = 'Bfrtip',
+                  scrollX = TRUE,
                   language = list(searchPlaceholder = "Search test data..."),
                   pageLength = 10, 
                   columnDefs = list(
