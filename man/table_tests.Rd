@@ -4,7 +4,7 @@
 \alias{table_tests}
 \title{Lists of Test Table for test directory apps}
 \usage{
-table_tests(session, data, meta_name)
+table_tests(session, data, meta_name, app = "covid19")
 }
 \description{
 Lists of Test Table for test directory apps
