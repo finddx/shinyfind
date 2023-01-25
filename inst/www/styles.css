@@ -166,8 +166,8 @@ h3 {
 /* more side padding on larger screens */
 @media (min-width: 768px) {
   .container-fluid {
-    padding-right: 10%;
-    padding-left: 10%;
+    padding-right: 5%;
+    padding-left: 5%;
   }
 }
 
@@ -186,11 +186,11 @@ html{
   background-size: cover;
   padding-top: 20px;
   padding-bottom: 20px;
-  min-height: 230px;
+  min-height: 180px;
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 
@@ -222,8 +222,8 @@ html{
 }
 @media (min-width: 768px) {
   .hero .content {
-    padding-right: 10%;
-    padding-left: 10%;
+    padding-right: 5%;
+    padding-left: 5%;
   }
 }
 
