@@ -11,9 +11,9 @@ get_data_ <- function(dataset,
                       ) {
   if(is.null(app)) stop("Specify the app you are requesting its data. e.g covid19")
   
-  version <- match.arg(version, choices = c("main", "preview"))
+  version <- match.arg(version, choices = c("main", "preview","report"))
 
-  branch <- if (version == "main") {
+  branch <- if (version == "main" | grepl("-", version)==FALSE) {
     version
   } else {
     paste0(version, "-", dataset)
