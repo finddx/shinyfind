@@ -185,7 +185,7 @@ get_data_all_ <- function(time = today_at_sunrise()) {
     mutate(symbol = coalesce(symbol, " ")) %>%
     filter(!is.na(unit)) %>%
     # https://github.com/finddx/FINDCov19TrackerShiny/issues/36
-    mutate(pos = if_else(pos > 1, NA_real_, pos)) %>%
+    mutate(pos = if_else(pos > 1, NA_real_, as.double(pos))) %>%
     mutate(pos = 100 * pos) %>%
     mutate_at(vars(pos, deaths, tests, cases), function(e) if_else(e > 50, round(e), round(e,1)))  %>%  # do not show decimals on large rates
     mutate(latest_test_date = as.character(latest_test_date)) %>%
