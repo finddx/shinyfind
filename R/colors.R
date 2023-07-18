@@ -78,3 +78,25 @@ pal_find_green_first <- function() {
 }
 
 
+# FIND extended palette
+# gg_color_swatches(12) +
+#   scale_fill_manual(values = pal_find_extended())
+#' @export
+pal_find_extended <- function(n = 12) {
+  stopifnot(n <= 12)
+  find_colors_ext <- c(
+    "#491E5D",
+    "#489FA9",
+    "#81969F",
+    "#D44F4E",
+    "#C7C5A7",
+    "#FF8F28",
+    "#5A9A70",
+    "#FFCB00",
+    "#354159",
+    "#9C9AFF",
+    "#865345",
+    "#9AE9BA"
+  )
+  find_colors_ext[1:n]
+}
