@@ -151,10 +151,10 @@
 #'
 #' }
 pickerGroupUI <- function(id, params, label = NULL, btn_label = "Reset filters", options = list(), inline = TRUE) {
-
+  
   # Namespace
   ns <- NS(id)
-
+  
   if (isTRUE(inline)) {
     tagPicker <- tags$div(
       class="btn-group-justified picker-group",
@@ -172,7 +172,6 @@ pickerGroupUI <- function(id, params, label = NULL, btn_label = "Reset filters",
               choices = input$choices,
               multiple = TRUE,
               width = "100%",
-              stateInput = FALSE,
               options = options
             )
           )
@@ -191,13 +190,12 @@ pickerGroupUI <- function(id, params, label = NULL, btn_label = "Reset filters",
           choices = x$choices,
           multiple = TRUE,
           width = "100%",
-          stateInput = FALSE,
           options = options
         )
       }
     )
   }
-
+  
   tagList(
     # singleton(
     # tagList(
@@ -217,7 +215,7 @@ pickerGroupUI <- function(id, params, label = NULL, btn_label = "Reset filters",
     #   style = "float: right;"
     # )
   )
-
+  
 }
 
 #' @param input standard \code{shiny} input.
@@ -233,24 +231,24 @@ pickerGroupUI <- function(id, params, label = NULL, btn_label = "Reset filters",
 #' @importFrom shiny observeEvent reactiveValues reactive observe reactiveValuesToList
 #' @importFrom stats aggregate as.formula
 pickerGroupServer <- function(input, output, session, data, vars) { # nocov start
-
+  
   data <- as.data.frame(data)
-
+  
   # Namespace
   ns <- session$ns
-
+  
   lapply(
     X = vars,
     FUN = function(x) {
       vals <- sort(unique(data[[x]]))
       updatePickerInput(
         session = session,
-        inputId = x,
+        inputId = ns(x),
         choices = vals
       )
     }
   )
-
+  
   observeEvent(input$reset_all, {
     lapply(
       X = vars,
@@ -258,24 +256,24 @@ pickerGroupServer <- function(input, output, session, data, vars) { # nocov star
         vals <- sort(unique(data[[x]]))
         updatePickerInput(
           session = session,
-          inputId = x,
+          inputId = ns(x),
           choices = vals
         )
       }
     )
   })
-
+  
   g_locked_var <<- NULL
   observe({
     inputs <- reactiveValuesToList(input)
-
+    
     # only process on opening of active picker
     is_open <- unlist(inputs[grep("_open$", names(inputs), value = TRUE)])
     open_var <- gsub("_open$", "", names(is_open)[is_open])
     req(open_var)
     if (identical(g_locked_var, open_var)) return()
     g_locked_var <<- open_var
-
+    
     inputs[["reset_all"]] <- NULL
     indicator <- lapply(
       X = setdiff(vars, open_var),
@@ -284,17 +282,17 @@ pickerGroupServer <- function(input, output, session, data, vars) { # nocov star
       }
     )
     data$indicator <- Reduce(f = `&`, x = indicator)
-
+    
     tmp <- aggregate(
       list(indicator = data$indicator),
       by = setNames(list(data[[open_var]]), open_var),
       FUN = Reduce, f = `|`
     )
-
+    
     # perhaps as an option?
     # tmp_sorted <- tmp[order(!tmp$indicator),]
     tmp_sorted <- tmp
-
+    
     updatePickerInput(
       session = session,
       inputId = open_var,
@@ -309,8 +307,8 @@ pickerGroupServer <- function(input, output, session, data, vars) { # nocov star
       )
     )
   })
-
-
+  
+  
   return(reactive({
     indicator <- lapply(
       X = vars,
