@@ -1,17 +1,18 @@
 # Function for plotting bar charts in test directory shiny apps with a uniform
 # style
+#' @import echarts4r
 #' @export
-plot_bar <- function(data, 
-                     id, 
+plot_bar <- function(data,
+                     id,
                      meta_data = NULL,
                      app = NULL,
-                     left = "130px", 
-                     nameGap = 100, 
+                     left = "130px",
+                     nameGap = 100,
                      subtitle = "Source: https://www.finddx.org/test-directory/",
                      ...) {
-  
+
   validate(need(nrow(data) > 0, "No data to show. Please choose different filters"))
-  
+
   data |>
     rename(value = !! id ) |>
     count(value) |>
@@ -28,9 +29,9 @@ plot_bar <- function(data,
       nameGap = nameGap,
       nameLocation = "middle",
       axisLabel = list(
-        interval = 0, 
+        interval = 0,
         width = "120",
-        overflow = "break", 
+        overflow = "break",
         color = "black"
       )
     ) |>
