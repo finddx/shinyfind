@@ -1,6 +1,6 @@
 Package: shinyfind
 Title: Common Resources for FIND Shiny Applications
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: 
     person(given = "Christoph",
            family = "Sax",
