@@ -9,10 +9,13 @@ plot_bar <- function(data,
                      left = "130px",
                      nameGap = 100,
                      subtitle = "Source: https://www.finddx.org/test-directory/",
+                     title_display = TRUE,
                      ...) {
 
   validate(need(nrow(data) > 0, "No data to show. Please choose different filters"))
 
+  title_text <- if(title_display)  map_id(id, meta_data, app) else ''
+  
   data |>
     rename(value = !! id ) |>
     count(value) |>
@@ -45,6 +48,6 @@ plot_bar <- function(data,
     add_logo(bottom = 0, subtitle = subtitle, height = 20) |>
     e_theme_custom(as.character(jsonlite::toJSON(list(color = pal_find_green_first())))) |>
     e_title(
-      text = map_id(id, meta_data, app)
+      text = title_text
     )
 }
